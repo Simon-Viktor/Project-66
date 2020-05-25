@@ -98,10 +98,11 @@ public class GameController {
         setupStaticViews();
         handleBindings();
         gameModel=new GameModel(viewProperty);
-        menuModel=new MenuModel(gameModel);
+        menuModel=new MenuModel(gameModel, viewProperty);
         viewProperty.DeckVisible.setValue(true);
         viewProperty.NewGameButtonText.setValue("New Game");
         viewProperty.QuitButtonText.setValue("Quit");
+        menuModel.SetScore();
     }
 
     private void setupStaticViews()
