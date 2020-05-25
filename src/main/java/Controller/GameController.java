@@ -11,6 +11,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
 
 public class GameController {
 
@@ -44,9 +45,51 @@ public class GameController {
     @FXML
     private ImageView CPUHand5;
 
+    @FXML
+    private ImageView trumpView;
+    @FXML
+    private ImageView trumpDeckClosed;
+
+    @FXML
+    private Button NewGameButton;
+    @FXML
+    private Button SurrenderAndQuitButton;
+    @FXML
+    private Button SaveAndQuitButton;
+    @FXML
+    private Button SaveButton;
+    @FXML
+    private Label PlayerTotalScoreLabel;
+    @FXML
+    private Label CPUTotalScoreLabel;
+
+
+    @FXML
+    private ImageView PlayerPlayedView;
+    @FXML
+    private ImageView CPUPlayedView;
+    @FXML
+    private ImageView PlayerHand1;
+    @FXML
+    private ImageView PlayerHand2;
+    @FXML
+    private ImageView PlayerHand3;
+    @FXML
+    private ImageView PlayerHand4;
+    @FXML
+    private ImageView PlayerHand5;
+
+
     ViewProperty viewProperty;
     GameModel gameModel;
     MenuModel menuModel;
+
+    @FXML
+    private Pane PlayerActionBlockerPane1;
+    @FXML
+    private Pane PlayerActionBlockerPane2;
+    @FXML
+    private Pane PlayerActionBlockerPane3;
 
     @FXML
     private void initialize()
@@ -57,6 +100,8 @@ public class GameController {
         gameModel=new GameModel(viewProperty);
         menuModel=new MenuModel(gameModel);
         viewProperty.DeckVisible.setValue(true);
+        viewProperty.NewGameButtonText.setValue("New Game");
+        viewProperty.QuitButtonText.setValue("Quit");
     }
 
     private void setupStaticViews()
@@ -74,6 +119,8 @@ public class GameController {
         CPUHand3.setImage(new Image((getClass().getResource("/Images/CardBack.jpg").toExternalForm())));
         CPUHand4.setImage(new Image((getClass().getResource("/Images/CardBack.jpg").toExternalForm())));
         CPUHand5.setImage(new Image((getClass().getResource("/Images/CardBack.jpg").toExternalForm())));
+
+        trumpDeckClosed.setImage(new Image((getClass().getResource("/Images/CardBack.jpg").toExternalForm())));
     }
 
     private void handleBindings()
@@ -96,6 +143,37 @@ public class GameController {
         Bindings.bindBidirectional(this.CPUHand3.visibleProperty(), viewProperty.CPUHand3Visible);
         Bindings.bindBidirectional(this.CPUHand4.visibleProperty(), viewProperty.CPUHand4Visible);
         Bindings.bindBidirectional(this.CPUHand5.visibleProperty(), viewProperty.CPUHand5Visible);
+
+        Bindings.bindBidirectional(this.trumpDeckClosed.visibleProperty(), viewProperty.TrumpDeckClosedVisibility);
+        Bindings.bindBidirectional(this.trumpView.visibleProperty(), viewProperty.TrumpCardVisibility);
+        Bindings.bindBidirectional(this.PlayerActionBlockerPane1.visibleProperty(), viewProperty.PlayerCanAct);
+        Bindings.bindBidirectional(this.PlayerActionBlockerPane2.visibleProperty(), viewProperty.PlayerCanAct);
+        Bindings.bindBidirectional(this.PlayerActionBlockerPane3.visibleProperty(), viewProperty.PlayerCanAct);
+
+        Bindings.bindBidirectional(this.SaveAndQuitButton.visibleProperty(), viewProperty.CanSave);
+        Bindings.bindBidirectional(this.SaveButton.visibleProperty(), viewProperty.CanSave);
+        Bindings.bindBidirectional(this.NewGameButton.textProperty(), viewProperty.NewGameButtonText);
+        Bindings.bindBidirectional(this.SurrenderAndQuitButton.textProperty(), viewProperty.QuitButtonText);
+
+        Bindings.bindBidirectional(this.PlayerTotalScoreLabel.textProperty(), viewProperty.PlayerTotalScoreText);
+        Bindings.bindBidirectional(this.CPUTotalScoreLabel.textProperty(), viewProperty.CPUTotalScoreText);
+
+        Bindings.bindBidirectional(this.PlayerHand1.imageProperty(), viewProperty.PlayerHand1);
+        Bindings.bindBidirectional(this.PlayerHand2.imageProperty(), viewProperty.PlayerHand2);
+        Bindings.bindBidirectional(this.PlayerHand3.imageProperty(), viewProperty.PlayerHand3);
+        Bindings.bindBidirectional(this.PlayerHand4.imageProperty(), viewProperty.PlayerHand4);
+        Bindings.bindBidirectional(this.PlayerHand5.imageProperty(), viewProperty.PlayerHand5);
+
+        Bindings.bindBidirectional(this.PlayerHand1.visibleProperty(), viewProperty.PlayerHand1Visible);
+        Bindings.bindBidirectional(this.PlayerHand2.visibleProperty(), viewProperty.PlayerHand2Visible);
+        Bindings.bindBidirectional(this.PlayerHand3.visibleProperty(), viewProperty.PlayerHand3Visible);
+        Bindings.bindBidirectional(this.PlayerHand4.visibleProperty(), viewProperty.PlayerHand4Visible);
+        Bindings.bindBidirectional(this.PlayerHand5.visibleProperty(), viewProperty.PlayerHand5Visible);
+
+        Bindings.bindBidirectional(this.PlayerPlayedView.imageProperty(), viewProperty.PlayerPlayedImage);
+        Bindings.bindBidirectional(this.PlayerPlayedView.visibleProperty(), viewProperty.PlayerPlayedImageVisible);
+        Bindings.bindBidirectional(this.CPUPlayedView.imageProperty(), viewProperty.CPUPlayedImage);
+        Bindings.bindBidirectional(this.CPUPlayedView.visibleProperty(), viewProperty.CPUPlayedImageVisible);
     }
 
     public void PlayCard(MouseEvent mouseEvent) {

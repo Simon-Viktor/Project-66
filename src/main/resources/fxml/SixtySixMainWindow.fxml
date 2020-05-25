@@ -48,7 +48,7 @@
               </rowConstraints>
                <children>
                   <Button fx:id="NewGameButton" mnemonicParsing="false" onAction="#NewGame" prefHeight="30.0" prefWidth="215.0" text="New Game" GridPane.columnIndex="1" GridPane.hgrow="NEVER" GridPane.rowIndex="1" />
-                  <Button mnemonicParsing="false" onAction="#SaveGame" prefHeight="30.0" prefWidth="215.0" text="Save" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                  <Button fx:id="SaveButton" mnemonicParsing="false" onAction="#SaveGame" prefHeight="30.0" prefWidth="215.0" text="Save" GridPane.columnIndex="3" GridPane.rowIndex="1" />
                   <Button mnemonicParsing="false" onAction="#LoadGame" prefHeight="30.0" prefWidth="215.0" text="Load" GridPane.columnIndex="5" GridPane.rowIndex="1" />
                   <Button fx:id="SaveAndQuitButton" mnemonicParsing="false" onAction="#SaveAndQuit" prefHeight="30.0" prefWidth="215.0" text="Save and Quit" GridPane.columnIndex="7" GridPane.rowIndex="1" />
                   <Button fx:id="SurrenderAndQuitButton" mnemonicParsing="false" onAction="#SurrenderAndQuit" prefHeight="30.0" prefWidth="215.0" text="Surrender and Quit" GridPane.columnIndex="9" GridPane.rowIndex="1" />
@@ -105,12 +105,15 @@
                   </Button>
                </children>
             </GridPane>
+            <Pane fx:id="PlayerActionBlockerPane1" layoutX="230.0" prefHeight="50.0" prefWidth="677.0" />
          </children>
       </Pane>
       <Pane layoutX="14.0" layoutY="335.0" prefHeight="200.0" prefWidth="200.0">
          <children>
             <ImageView fx:id="deckView" fitHeight="200.0" fitWidth="130.0" layoutX="5.0" layoutY="-1.0" onMouseClicked="#deckClose" pickOnBounds="true" preserveRatio="true" />
-            <ImageView fx:id="trumpView" fitHeight="200.0" fitWidth="130.0" layoutX="40.0" layoutY="1.0" onMouseClicked="#trumpTake" pickOnBounds="true" preserveRatio="true" rotate="90.0" />
+            <ImageView fx:id="trumpView" fitHeight="200.0" fitWidth="130.0" layoutX="35.0" layoutY="1.0" onMouseClicked="#trumpTake" pickOnBounds="true" preserveRatio="true" rotate="90.0" />
+            <ImageView fx:id="trumpDeckClosed" fitHeight="200.0" fitWidth="130.0" layoutX="35.0" layoutY="1.0" onMouseClicked="#trumpTake" pickOnBounds="true" preserveRatio="true" rotate="90.0" />
+            <Pane fx:id="PlayerActionBlockerPane2" prefHeight="200.0" prefWidth="200.0" />
          </children>
       </Pane>
       <Pane layoutX="624.0" layoutY="347.0" prefHeight="200.0" prefWidth="300.0">
@@ -121,7 +124,7 @@
       </Pane>
       <Pane layoutX="1.0" layoutY="655.0" prefHeight="200.0" prefWidth="1548.0">
          <children>
-            <ImageView fx:id="PlayerHand3" fitHeight="200.0" fitWidth="130.0" layoutX="576.0" layoutY="-8.0" onMouseClicked="#PlayCard" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="PlayerHand3" fitHeight="200.0" fitWidth="130.0" layoutX="576.0" onMouseClicked="#PlayCard" pickOnBounds="true" preserveRatio="true" />
             <ImageView fx:id="PlayerHand1" fitHeight="200.0" fitWidth="130.0" layoutX="684.0" onMouseClicked="#PlayCard" pickOnBounds="true" preserveRatio="true" />
             <ImageView fx:id="PlayerHand2" fitHeight="200.0" fitWidth="130.0" layoutX="826.0" onMouseClicked="#PlayCard" pickOnBounds="true" preserveRatio="true" />
             <ImageView fx:id="PlayerHand5" fitHeight="200.0" fitWidth="130.0" layoutX="424.0" onMouseClicked="#PlayCard" pickOnBounds="true" preserveRatio="true" />
@@ -163,6 +166,7 @@
                   </GridPane>
                </children>
             </GridPane>
+            <Pane fx:id="PlayerActionBlockerPane3" layoutX="387.0" prefHeight="200.0" prefWidth="827.0" />
          </children>
       </Pane>
    </children>

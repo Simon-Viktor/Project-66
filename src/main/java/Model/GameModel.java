@@ -11,14 +11,18 @@ public class GameModel {
     }
 
     public static void CloseDeck() {
+
     }
 
     public static void CallPair() {
+
     }
 
     public static void TakeTrump() {
+
     }
 
     public static void PlayPair() {
+
     }
 }

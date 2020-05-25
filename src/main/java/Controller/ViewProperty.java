@@ -1,6 +1,7 @@
 package Controller;
 
 import javafx.beans.property.*;
+import javafx.scene.image.Image;
 
 public class ViewProperty {
     public BooleanProperty Spring20Visible;
@@ -22,6 +23,34 @@ public class ViewProperty {
     public BooleanProperty CPUHand4Visible;
     public BooleanProperty CPUHand5Visible;
 
+    public BooleanProperty TrumpCardVisibility;
+    public BooleanProperty TrumpDeckClosedVisibility;
+    public BooleanProperty PlayerCanAct;
+
+    public BooleanProperty CanSave;
+    public StringProperty NewGameButtonText;
+    public StringProperty QuitButtonText;
+
+    public StringProperty PlayerTotalScoreText;
+    public StringProperty CPUTotalScoreText;
+    public ObjectProperty<Image> PlayerPlayedImage;
+    public ObjectProperty<Image> CPUPlayedImage;
+
+    public ObjectProperty<Image> PlayerHand1;
+    public ObjectProperty<Image> PlayerHand2;
+    public ObjectProperty<Image> PlayerHand3;
+    public ObjectProperty<Image> PlayerHand4;
+    public ObjectProperty<Image> PlayerHand5;
+
+    public BooleanProperty PlayerHand1Visible;
+    public BooleanProperty PlayerHand2Visible;
+    public BooleanProperty PlayerHand3Visible;
+    public BooleanProperty PlayerHand4Visible;
+    public BooleanProperty PlayerHand5Visible;
+
+    public BooleanProperty PlayerPlayedImageVisible;
+    public BooleanProperty CPUPlayedImageVisible;
+
     public ViewProperty()
     {
         Spring20Visible=new SimpleBooleanProperty();
@@ -42,12 +71,34 @@ public class ViewProperty {
         CPUHand3Visible=new SimpleBooleanProperty();
         CPUHand4Visible=new SimpleBooleanProperty();
         CPUHand5Visible=new SimpleBooleanProperty();
-    }
+
+        TrumpCardVisibility=new SimpleBooleanProperty();
+        TrumpDeckClosedVisibility=new SimpleBooleanProperty();
+        PlayerCanAct=new SimpleBooleanProperty();
+
+        CanSave=new SimpleBooleanProperty();
+        NewGameButtonText=new SimpleStringProperty();
+        QuitButtonText=new SimpleStringProperty();
+
+        PlayerTotalScoreText=new SimpleStringProperty();
+        CPUTotalScoreText=new SimpleStringProperty();
+        PlayerPlayedImage=new SimpleObjectProperty<Image>();
+        CPUPlayedImage=new SimpleObjectProperty<Image>();
+
+        PlayerHand1=new SimpleObjectProperty<Image>();
+        PlayerHand2=new SimpleObjectProperty<Image>();
+        PlayerHand3=new SimpleObjectProperty<Image>();
+        PlayerHand4=new SimpleObjectProperty<Image>();
+        PlayerHand5=new SimpleObjectProperty<Image>();
+
+        PlayerHand1Visible=new SimpleBooleanProperty();
+        PlayerHand2Visible=new SimpleBooleanProperty();
+        PlayerHand3Visible=new SimpleBooleanProperty();
+        PlayerHand4Visible=new SimpleBooleanProperty();
+        PlayerHand5Visible=new SimpleBooleanProperty();
 
 
-    public void Update(ViewProperty other)
-    {
-        //TODO - Assign the values from other into the values of this. Only do once everything else is done.
-        //TODO - Alternatively, add a reference into the main game model and just manipulate things from there.
+        PlayerPlayedImageVisible=new SimpleBooleanProperty();
+        CPUPlayedImageVisible=new SimpleBooleanProperty();
     }
 }
