@@ -5,6 +5,7 @@ import Controller.ViewProperty;
 public class GameModel {
     //TODO - Interactions with the game itself go here
     ViewProperty view;
+
     public GameModel(ViewProperty view)
     {
         this.view=view;

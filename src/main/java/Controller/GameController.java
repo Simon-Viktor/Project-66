@@ -182,6 +182,9 @@ public class GameController {
     }
 
     public void NewGame(ActionEvent actionEvent) {
+        viewProperty.NewGameButtonText.setValue("Surrender and New Game");
+        viewProperty.CanSave.set(true);
+        viewProperty.QuitButtonText.setValue("Surrender and Quit");
         MenuModel.NewGame();
     }
 
