@@ -178,7 +178,10 @@ public class GameController {
     }
 
     public void PlayCard(MouseEvent mouseEvent) {
-        
+        ImageView temp=(ImageView)(mouseEvent.getTarget());
+        String var=temp.getId();
+        String target=String.valueOf((var.toCharArray())[var.length()-1]);
+        gameModel.Play(Integer.parseInt(target));
     }
 
     public void NewGame(ActionEvent actionEvent) {
