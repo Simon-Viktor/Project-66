@@ -1,6 +1,6 @@
 package Model;
 
-public enum FirstPlayer {
+public enum PlayerEnum {
     CPU,
     Player,
 }

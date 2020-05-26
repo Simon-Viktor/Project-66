@@ -1,12 +1,15 @@
 package Model;
 
 import Controller.ViewProperty;
+import javafx.scene.image.Image;
 
+import java.util.HashMap;
 import java.util.HashSet;
 
 public class GameModel {
     //TODO - Interactions with the game itself go here
     HashSet<Card> fullDeck;
+    HashMap<Card, Image> cardsFaceMap;
 
     ViewProperty view;
     Deck deck;
@@ -22,7 +25,7 @@ public class GameModel {
         CPU=new CPUPlayer();
         playedCards=new PlayedCards();
 
-        fullDeck=generateFullDeck();
+        generateFullDeck();
     }
 
     public static void CloseDeck() {
@@ -42,13 +45,19 @@ public class GameModel {
     }
 
     public void Play(int target) {
-        //TODO - Got a number from 1-5. Lower number by 1. play that element of hand.
+        //TODO - Got a number from 1-5. Lower number by 1. play that element of hand. Play that element onto the played cards.
     }
 
-    private HashSet<Card> generateFullDeck()
+    private void generateFullDeck()
     {
-        HashSet<Card> ret=new HashSet<Card>();
-
-        return ret;
+        cardsFaceMap=new HashMap<Card, Image>();
+        fullDeck=new HashSet<Card>();
+        for (CardColour colour: CardColour.values()) {
+            for (CardFace face : CardFace.values()) {
+                Card card = new Card(colour, face);
+                cardsFaceMap.put(card, new Image(getClass().getResource( "/Images/"+card.cardColour.fileSegment+card.cardFace.fileSegment+".jpg").toExternalForm()));
+                fullDeck.add(card);
+            }
+        }
     }
 }

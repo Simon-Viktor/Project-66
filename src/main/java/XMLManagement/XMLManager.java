@@ -1,9 +1,8 @@
 package XMLManagement;
 
-import Model.FirstPlayer;
+import Model.PlayerEnum;
 import Model.Score;
 import com.thoughtworks.xstream.XStream;
-import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -74,33 +73,33 @@ public class XMLManager {
         return ret;
     }
 */
-    public void SetFirstPlayer(FirstPlayer firstPlayer)
+    public void SetFirstPlayer(PlayerEnum playerEnum)
     {
         FileWriter fileWriter= null;
         try {
             fileWriter = new FileWriter(firstPlayerPath, false);
-            xStream.toXML(firstPlayer, fileWriter);
+            xStream.toXML(playerEnum, fileWriter);
             fileWriter.close();
         }
         catch (IOException e) {
             e.printStackTrace();
         }
     }
-    public FirstPlayer LoadFirstPlayer()
+    public PlayerEnum LoadFirstPlayer()
     {
         if(!Exists(firstPlayerPath))
         {
             FileWriter fileWriter= null;
             try {
                 fileWriter = new FileWriter(firstPlayerPath, false);
-                xStream.toXML(FirstPlayer.Player, fileWriter);
+                xStream.toXML(PlayerEnum.Player, fileWriter);
                 fileWriter.close();
             }
             catch (IOException e) {
                 e.printStackTrace();
             }
         }
-        return (FirstPlayer)xStream.fromXML(getXMLString(firstPlayerPath));
+        return (PlayerEnum)xStream.fromXML(getXMLString(firstPlayerPath));
     }
 
 
