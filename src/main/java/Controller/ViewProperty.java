@@ -4,12 +4,12 @@ import javafx.beans.property.*;
 import javafx.scene.image.Image;
 
 public class ViewProperty {
-    public BooleanProperty Spring20Visible;
-    public BooleanProperty Summer20Visible;
-    public BooleanProperty Autumn20Visible;
-    public BooleanProperty Winter20Visible;
+    public BooleanProperty Spring20Visible; //TODO
+    public BooleanProperty Summer20Visible; //TODO
+    public BooleanProperty Autumn20Visible; //TODO
+    public BooleanProperty Winter20Visible; //TODO
 
-    public BooleanProperty Call20Visible;
+    public BooleanProperty Call20Visible; //TODO
     public BooleanProperty DeckVisible;
     public BooleanProperty GameScoreVisible;
     public StringProperty GameScore;
@@ -17,25 +17,23 @@ public class ViewProperty {
     public BooleanProperty CPUScoredVisible;
     public BooleanProperty PlayerScoredVisible;
 
-    public BooleanProperty CPUHand1Visible;
-    public BooleanProperty CPUHand2Visible;
-    public BooleanProperty CPUHand3Visible;
-    public BooleanProperty CPUHand4Visible;
-    public BooleanProperty CPUHand5Visible;
-
     public BooleanProperty TrumpCardVisibility;
     public BooleanProperty TrumpDeckClosedVisibility;
     public ObjectProperty<Image> TrumpCardImage;
-    public BooleanProperty PlayerCanAct;
+    public BooleanProperty PlayerCanAct; //TODO
 
-    public BooleanProperty CanSave;
+    public BooleanProperty CanSave; //TODO
     public StringProperty NewGameButtonText;
     public StringProperty QuitButtonText;
 
     public StringProperty PlayerTotalScoreText;
     public StringProperty CPUTotalScoreText;
-    public ObjectProperty<Image> PlayerPlayedImage;
-    public ObjectProperty<Image> CPUPlayedImage;
+
+    public BooleanProperty CPUHand1Visible;
+    public BooleanProperty CPUHand2Visible;
+    public BooleanProperty CPUHand3Visible;
+    public BooleanProperty CPUHand4Visible;
+    public BooleanProperty CPUHand5Visible;
 
     public ObjectProperty<Image> PlayerHand1;
     public ObjectProperty<Image> PlayerHand2;
@@ -51,6 +49,8 @@ public class ViewProperty {
 
     public BooleanProperty PlayerPlayedImageVisible;
     public BooleanProperty CPUPlayedImageVisible;
+    public ObjectProperty<Image> PlayerPlayedImage;
+    public ObjectProperty<Image> CPUPlayedImage;
 
     public ViewProperty()
     {

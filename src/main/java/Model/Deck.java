@@ -1,17 +1,24 @@
 package Model;
 
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleObjectProperty;
+
 import java.util.HashSet;
 
 public class Deck implements IRandomSetElement {
-    Boolean isClosed;
-    HashSet<Card> deck;
-    Card trump;
+    public Boolean isClosed;
+    public HashSet<Card> deck;
+    public Card trump;
+    ObjectProperty<CardColour> trumpColour;
 
     public Deck()
     {
         deck=new HashSet<>();
         trump=null;
         isClosed=false;
+        trumpColour=new SimpleObjectProperty<CardColour>();
     }
 
     public Card Draw()
@@ -25,10 +32,10 @@ public class Deck implements IRandomSetElement {
         return ret;
     }
 
-    public CardColour trumpColour()
-    {
-        return trump.cardColour;
-    }
+    //public CardColour trumpColour()
+    //{
+    //    return trump.cardColour;
+    //}
 
     public void Shuffle(HashSet<Card> unshuffledDeck)
     {
@@ -44,5 +51,6 @@ public class Deck implements IRandomSetElement {
 
     public void HitTrump() {
         trump=Draw();
+        trumpColour.set(trump.cardColour);
     }
 }

@@ -1,8 +1,6 @@
 package Controller;
 
-import Model.CardColour;
-import Model.GameModel;
-import Model.MenuModel;
+import Model.*;
 import javafx.beans.binding.Bindings;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -13,7 +11,9 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 
-public class GameController {
+import java.util.HashSet;
+
+public  class GameController {
 
 
     @FXML
@@ -124,6 +124,61 @@ public class GameController {
         trumpDeckClosed.setImage(new Image((getClass().getResource("/Images/CardBack.jpg").toExternalForm())));
     }
 
+
+    public void PlayCard(MouseEvent mouseEvent) {
+        ImageView temp=(ImageView)(mouseEvent.getTarget());
+        String var=temp.getId();
+        String target=String.valueOf((var.toCharArray())[var.length()-1]);
+        gameModel.Play(Integer.parseInt(target)-1);
+        UpdateView();
+    }
+
+    public void NewGame(ActionEvent actionEvent) {
+        menuModel.NewGame();
+        UpdateView();
+    }
+
+    public void SaveGame(ActionEvent actionEvent) {
+        menuModel.SaveGame();
+    }
+
+    public void LoadGame(ActionEvent actionEvent) {
+        menuModel.LoadGame();
+    }
+
+    public void SaveAndQuit(ActionEvent actionEvent) {
+        //TODO - Currently testing method
+
+        gameModel.player.Scored.add(new Card(CardColour.Autumn, CardFace.King));
+        gameModel.CPU.Scored.add(new Card(CardColour.Autumn, CardFace.King));
+
+        UpdateView();
+        //menuModel.SaveGame();
+        //System.exit(0);
+    }
+
+    public void SurrenderAndQuit(ActionEvent actionEvent) {
+        menuModel.Surrender();
+        System.exit(0);
+    }
+
+    public void deckClose(MouseEvent mouseEvent) {
+        gameModel.CloseDeck();
+    }
+
+    public void trumpTake(MouseEvent mouseEvent) {
+        gameModel.TakeTrump();
+    }
+
+    public void PlayerCallPair(ActionEvent actionEvent) {
+        gameModel.CallPair();
+    }
+
+    public void Play20(MouseEvent mouseEvent) {
+        gameModel.PlayPair();
+    }
+
+
     private void handleBindings()
     {
         Bindings.bindBidirectional(this.Spring20Button.visibleProperty(), viewProperty.Spring20Visible);
@@ -178,48 +233,97 @@ public class GameController {
         Bindings.bindBidirectional(this.CPUPlayedView.visibleProperty(), viewProperty.CPUPlayedImageVisible);
     }
 
-    public void PlayCard(MouseEvent mouseEvent) {
-        ImageView temp=(ImageView)(mouseEvent.getTarget());
-        String var=temp.getId();
-        String target=String.valueOf((var.toCharArray())[var.length()-1]);
-        gameModel.Play(Integer.parseInt(target));
+
+    public void UpdateView() {
+        handleHandsViews();
+        handleDeckView();
+        handlePlayedCards();
+        if(gameModel.player.Score()==0) viewProperty.GameScoreVisible.set(false);
+        else {
+            viewProperty.GameScore.set(gameModel.player.Score().toString());
+            viewProperty.GameScoreVisible.set(true);
+        }
+        handlePlayerActionPossibilities();
     }
 
-    public void NewGame(ActionEvent actionEvent) {
-        menuModel.NewGame();
+    private void handlePlayerActionPossibilities() {
+        //TODO - Everything here is what's left as TODOs from ViewProperty
     }
 
-    public void SaveGame(ActionEvent actionEvent) {
-        menuModel.SaveGame();
-    }
 
-    public void LoadGame(ActionEvent actionEvent) {
-        menuModel.LoadGame();
-    }
+    private void handleHandsViews()
+    {
+        viewProperty.CPUHand1Visible.set(gameModel.CPU.Hand.size()>0);
+        viewProperty.CPUHand2Visible.set(gameModel.CPU.Hand.size()>1);
+        viewProperty.CPUHand3Visible.set(gameModel.CPU.Hand.size()>2);
+        viewProperty.CPUHand4Visible.set(gameModel.CPU.Hand.size()>3);
+        viewProperty.CPUHand5Visible.set(gameModel.CPU.Hand.size()>4);
 
-    public void SaveAndQuit(ActionEvent actionEvent) {
-        menuModel.SaveGame();
-        System.exit(0);
-    }
+        viewProperty.PlayerHand5Visible.set(false);
+        viewProperty.PlayerHand4Visible.set(false);
+        viewProperty.PlayerHand3Visible.set(false);
+        viewProperty.PlayerHand2Visible.set(false);
+        viewProperty.PlayerHand1Visible.set(false);
 
-    public void SurrenderAndQuit(ActionEvent actionEvent) {
-        menuModel.Surrender();
-        System.exit(0);
+        switch (gameModel.player.Hand.size())
+        {
+            case 5:
+                viewProperty.PlayerHand5Visible.set(true);
+                viewProperty.PlayerHand5.setValue(gameModel.cardsFaceMap.get(gameModel.player.cardInHand(5)));
+            case 4:
+                viewProperty.PlayerHand4Visible.set(true);
+                viewProperty.PlayerHand4.setValue(gameModel.cardsFaceMap.get(gameModel.player.cardInHand(4)));
+            case 3:
+                viewProperty.PlayerHand3Visible.set(true);
+                viewProperty.PlayerHand3.setValue(gameModel.cardsFaceMap.get(gameModel.player.cardInHand(3)));
+            case 2:
+                viewProperty.PlayerHand2Visible.set(true);
+                viewProperty.PlayerHand2.setValue(gameModel.cardsFaceMap.get(gameModel.player.cardInHand(2)));
+            case 1:
+                viewProperty.PlayerHand1Visible.set(true);
+                viewProperty.PlayerHand1.setValue(gameModel.cardsFaceMap.get(gameModel.player.cardInHand(1)));
+            default:
+        }
     }
-
-    public void deckClose(MouseEvent mouseEvent) {
-        gameModel.CloseDeck();
+    private void handleDeckView()
+    {
+        if(gameModel.deck.trump!=null)
+        {
+            if(!gameModel.deck.isClosed)
+            {
+                viewProperty.DeckVisible.set(true);
+                viewProperty.TrumpCardVisibility.set(true);
+                viewProperty.TrumpCardImage.setValue(gameModel.cardsFaceMap.get(gameModel.deck.trump));
+            }
+            else
+            {
+                viewProperty.TrumpDeckClosedVisibility.set(true);
+                viewProperty.TrumpCardVisibility.set(false);
+            }
+        }
+        else
+        {
+            viewProperty.DeckVisible.set(false);
+            viewProperty.TrumpCardVisibility.set(false);
+        }
     }
-
-    public void trumpTake(MouseEvent mouseEvent) {
-        gameModel.TakeTrump();
-    }
-
-    public void PlayerCallPair(ActionEvent actionEvent) {
-        gameModel.CallPair();
-    }
-
-    public void Play20(MouseEvent mouseEvent) {
-        gameModel.PlayPair();
+    private void handlePlayedCards()
+    {
+        if(gameModel.playedCards.CPUPlayed!=null)
+        {
+            viewProperty.CPUPlayedImageVisible.set(true);
+            viewProperty.CPUPlayedImage.setValue(gameModel.cardsFaceMap.get(gameModel.playedCards.CPUPlayed));
+        }
+        else viewProperty.CPUPlayedImageVisible.set(false);
+        if(gameModel.playedCards.playerPlayed!=null)
+        {
+            viewProperty.PlayerPlayedImageVisible.set(true);
+            viewProperty.PlayerPlayedImage.setValue(gameModel.cardsFaceMap.get(gameModel.playedCards.playerPlayed));
+        }
+        else viewProperty.PlayerPlayedImageVisible.set(false);
+        if(gameModel.player.Scored.isEmpty()) viewProperty.PlayerScoredVisible.set(false);
+        else viewProperty.PlayerScoredVisible.set(true);
+        if(gameModel.CPU.Scored.isEmpty()) viewProperty.CPUScoredVisible.set(false);
+        else viewProperty.CPUScoredVisible.set(true);
     }
 }

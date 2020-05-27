@@ -1,22 +1,22 @@
 package Model;
 
 import Controller.ViewProperty;
+import javafx.beans.binding.Bindings;
 import javafx.scene.image.Image;
 
 import java.util.HashMap;
 import java.util.HashSet;
 
 public class GameModel {
-    //TODO - Interactions with the game itself go here
     HashSet<Card> fullDeck;
-    HashMap<Card, Image> cardsFaceMap;
+    public HashMap<Card, Image> cardsFaceMap;
 
     ViewProperty view;
-    Deck deck;
-    Player player;
-    CPUPlayer CPU;
-    PlayedCards playedCards;
-    PlayerEnum firstPlayer;
+    public Deck deck;
+    public Player player;
+    public CPUPlayer CPU;
+    public PlayedCards playedCards;
+    public PlayerEnum firstPlayer;
 
 
     public GameModel(ViewProperty view)
@@ -28,6 +28,7 @@ public class GameModel {
         playedCards=new PlayedCards();
 
         generateFullDeck();
+        Bindings.bindBidirectional(this.deck.trumpColour, this.playedCards.trumpColour);
     }
 
     public void CloseDeck() {
@@ -49,7 +50,11 @@ public class GameModel {
     }
 
     public void Play(int target) {
-        //TODO - Got a number from 1-5. Lower number by 1. play that element of hand. Play that element onto the played cards.
+        Card played=player.Play(target);
+        if(played!=null)
+        {
+            playedCards.PlayCard(played, PlayerEnum.Player);
+        }
     }
 
     private void generateFullDeck()
@@ -69,10 +74,9 @@ public class GameModel {
         this.firstPlayer=firstPlayer;
         deck.Shuffle(cloneDeck());
         StartDraws();
-        UpdateView();
     }
 
-    private void UpdateView() {
+    public void UpdateView() {
         handleHandsViews();
         handleDeckView();
     }

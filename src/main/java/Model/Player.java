@@ -3,11 +3,11 @@ package Model;
 import java.util.HashSet;
 
 public class Player {
-    HashSet<Card> Hand;
-    HashSet<Card> Scored;
+    public HashSet<Card> Hand;
+    public HashSet<Card> Scored;
 
-    CardColour ColourRestriction;
-    Boolean PairRestriction;
+    public CardColour ColourRestriction;
+    public Boolean PairRestriction;
 
     public Player()
     {
@@ -20,11 +20,15 @@ public class Player {
     public Card Play(Integer selected)
     {
         Card ret=(Card)Hand.toArray()[selected];
-        Hand.remove(ret);
-        return ret;
+        if(restrictedHand().contains(ret))
+        {
+            Hand.remove(ret);
+            return ret;
+        }
+        return null;
     }
 
-    Card cardInHand(Integer target)
+    public Card cardInHand(Integer target)
     {
         return (Card)(Hand.toArray()[target-1]);
     }
@@ -55,9 +59,7 @@ public class Player {
             }
             if(PairRestriction)
             {
-                for (Card card : ret) {
-                    if (!(card.cardFace == CardFace.King || card.cardFace == CardFace.Upperknave)) ret.remove(card);
-                }
+                ret.removeIf(card -> !(card.cardFace == CardFace.King || card.cardFace == CardFace.Upperknave));
             }
         }
         if(ret.size()==0)ret=Hand;

@@ -1,16 +1,20 @@
 package Model;
 
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
+
 import java.util.HashSet;
 
 public class PlayedCards {
-    Card CPUPlayed;
-    Card playerPlayed;
-    CardColour trumpColour;
+    public Card CPUPlayed;
+    public Card playerPlayed;
+    ObjectProperty<CardColour> trumpColour;
 
     public PlayedCards()
     {
         CPUPlayed=null;
         playerPlayed=null;
+        trumpColour=new SimpleObjectProperty<CardColour>();
     }
 
     public TrickResult PlayCard(Card card, PlayerEnum target)
@@ -19,7 +23,8 @@ public class PlayedCards {
         {
             case Player:
                 playerPlayed=card;
-                if(CPUPlayed!=null)
+                //TODO - Implement the following bit, whatever it was going to be...
+                //if(CPUPlayed!=null)
                 break;
             case CPU:
                 CPUPlayed=card;
@@ -43,7 +48,7 @@ public class PlayedCards {
         if(playerPlayed.cardColour!=CPUPlayed.cardColour)
         {
             scorer= PlayerEnum.CPU;
-            if(playerPlayed.cardColour==trumpColour) scorer= PlayerEnum.Player;
+            if(playerPlayed.cardColour==trumpColour.getValue()) scorer= PlayerEnum.Player;
         }
         else if(CPUPlayed.cardFace.value>playerPlayed.cardFace.value)
         {
@@ -60,7 +65,7 @@ public class PlayedCards {
         if(playerPlayed.cardColour!=CPUPlayed.cardColour)
         {
             scorer= PlayerEnum.Player;
-            if(CPUPlayed.cardColour==trumpColour) scorer= PlayerEnum.CPU;
+            if(CPUPlayed.cardColour==trumpColour.getValue()) scorer= PlayerEnum.CPU;
         }
         else if(playerPlayed.cardFace.value>CPUPlayed.cardFace.value)
         {
