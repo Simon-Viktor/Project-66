@@ -6,10 +6,15 @@ public class Player {
     HashSet<Card> Hand;
     HashSet<Card> Scored;
 
+    CardColour ColourRestriction;
+    Boolean PairRestriction;
+
     public Player()
     {
         Hand=new HashSet<Card>();
         Scored=new HashSet<Card>();
+        ColourRestriction=null;
+        PairRestriction=false;
     }
 
     public Card Play(Integer selected)
@@ -39,6 +44,26 @@ public class Player {
         Hand.add(card);
 
     }
+
+    protected HashSet<Card> restrictedHand()
+    {
+        HashSet<Card> ret=new HashSet<Card>();
+        if(ColourRestriction!=null)
+        {
+            for (Card card : Hand) {
+                if (card.cardColour == ColourRestriction) ret.add(card);
+            }
+            if(PairRestriction)
+            {
+                for (Card card : ret) {
+                    if (!(card.cardFace == CardFace.King || card.cardFace == CardFace.Upperknave)) ret.remove(card);
+                }
+            }
+        }
+        if(ret.size()==0)ret=Hand;
+        return ret;
+    }
+
     public Integer Score()
     {
         Integer ret=0;
