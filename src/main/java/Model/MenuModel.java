@@ -13,6 +13,7 @@ public class MenuModel {
         gameModel=game;
         viewProperty=view;
         xml=new XMLManager();
+        gameModel.firstPlayer=xml.LoadFirstPlayer();
     }
 
     public void NewGame() {

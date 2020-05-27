@@ -1,5 +1,8 @@
 package Model;
 
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
+
 import java.util.HashSet;
 
 public class Player {
@@ -8,6 +11,7 @@ public class Player {
 
     public CardColour ColourRestriction;
     public Boolean PairRestriction;
+    public ObjectProperty<CardColour> TrumpColour;
 
     public Player()
     {
@@ -15,6 +19,7 @@ public class Player {
         Scored=new HashSet<Card>();
         ColourRestriction=null;
         PairRestriction=false;
+        TrumpColour=new SimpleObjectProperty<CardColour>();
     }
 
     public Card Play(Integer selected)
@@ -60,6 +65,12 @@ public class Player {
             if(PairRestriction)
             {
                 ret.removeIf(card -> !(card.cardFace == CardFace.King || card.cardFace == CardFace.Upperknave));
+            }
+            else if(ColourRestriction!=TrumpColour.get())
+            {
+                for (Card card : Hand) {
+                    if(card.cardColour==TrumpColour.get()) ret.add(card);
+                }
             }
         }
         if(ret.size()==0)ret=Hand;

@@ -248,6 +248,29 @@ public  class GameController {
 
     private void handlePlayerActionPossibilities() {
         //TODO - Everything here is what's left as TODOs from ViewProperty
+        if(gameModel.player.HasPair().size()>0)
+        {
+            viewProperty.Call20Visible.set(true);
+
+            //TODO - this is for after the player calls a pair. Pressing the button again will cancel that.
+            //viewProperty.Spring20Visible.set(false);
+            //viewProperty.Summer20Visible.set(false);
+            //viewProperty.Autumn20Visible.set(false);
+            //viewProperty.Winter20Visible.set(false);
+            //for (CardColour colour:gameModel.player.HasPair()) {
+            //    switch (colour)
+            //    {
+            //        case Spring:
+            //            viewProperty.Spring20Visible.set(true);
+            //        case Summer:
+            //            viewProperty.Summer20Visible.set(true);
+            //        case Autumn:
+            //            viewProperty.Autumn20Visible.set(true);
+            //        case Winter:
+            //            viewProperty.Winter20Visible.set(true);
+            //    }
+            //}
+        }
     }
 
 

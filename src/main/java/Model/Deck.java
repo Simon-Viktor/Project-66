@@ -24,11 +24,18 @@ public class Deck implements IRandomSetElement {
     public Card Draw()
     {
         Card ret=null;
-        for (Card card: deck) {
-            ret=card;
-            break;
+        if(deck.size()>0) {
+            for (Card card : deck) {
+                ret = card;
+                break;
+            }
+            deck.remove(ret);
         }
-        deck.remove(ret);
+        else
+        {
+            ret=trump;
+            trump=null;
+        }
         return ret;
     }
 

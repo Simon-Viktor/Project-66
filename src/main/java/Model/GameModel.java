@@ -18,7 +18,6 @@ public class GameModel {
     public PlayedCards playedCards;
     public PlayerEnum firstPlayer;
 
-
     public GameModel(ViewProperty view)
     {
         this.view=view;
@@ -29,20 +28,26 @@ public class GameModel {
 
         generateFullDeck();
         Bindings.bindBidirectional(this.deck.trumpColour, this.playedCards.trumpColour);
+        Bindings.bindBidirectional(this.deck.trumpColour, this.CPU.TrumpColour);
+        Bindings.bindBidirectional(this.deck.trumpColour, this.player.TrumpColour);
     }
 
     public void CloseDeck() {
         //TODO - fully implement deck closing
-        deck.isClosed=true;
-        UpdateView();
+        if(deck.deck.size()>=3) {
+            deck.isClosed = true; //TODO - deck.isClosed is also true when endgame hits, but deck-size is 0. That way, win calculations won't award 3 for not winning.
+        }
     }
 
     public static void CallPair() {
 
     }
 
-    public static void TakeTrump() {
-
+    public void TakeTrump() {
+        if(player.Hand.contains(new Card(deck.trumpColour.get(), CardFace.Underknave)))
+        {
+            //TODO - Replace the cards in question with each other.
+        }
     }
 
     public static void PlayPair() {
@@ -74,68 +79,6 @@ public class GameModel {
         this.firstPlayer=firstPlayer;
         deck.Shuffle(cloneDeck());
         StartDraws();
-    }
-
-    public void UpdateView() {
-        handleHandsViews();
-        handleDeckView();
-    }
-
-    private void handleHandsViews()
-    {
-        view.CPUHand1Visible.set(CPU.Hand.size()>0);
-        view.CPUHand2Visible.set(CPU.Hand.size()>1);
-        view.CPUHand3Visible.set(CPU.Hand.size()>2);
-        view.CPUHand4Visible.set(CPU.Hand.size()>3);
-        view.CPUHand5Visible.set(CPU.Hand.size()>4);
-
-        view.PlayerHand5Visible.set(false);
-        view.PlayerHand4Visible.set(false);
-        view.PlayerHand3Visible.set(false);
-        view.PlayerHand2Visible.set(false);
-        view.PlayerHand1Visible.set(false);
-
-        switch (player.Hand.size())
-        {
-            case 5:
-                view.PlayerHand5Visible.set(true);
-                view.PlayerHand5.setValue(cardsFaceMap.get(player.cardInHand(5)));
-            case 4:
-                view.PlayerHand4Visible.set(true);
-                view.PlayerHand4.setValue(cardsFaceMap.get(player.cardInHand(4)));
-            case 3:
-                view.PlayerHand3Visible.set(true);
-                view.PlayerHand3.setValue(cardsFaceMap.get(player.cardInHand(3)));
-            case 2:
-                view.PlayerHand2Visible.set(true);
-                view.PlayerHand2.setValue(cardsFaceMap.get(player.cardInHand(2)));
-            case 1:
-                view.PlayerHand1Visible.set(true);
-                view.PlayerHand1.setValue(cardsFaceMap.get(player.cardInHand(1)));
-            default:
-        }
-    }
-    private void handleDeckView()
-    {
-        if(deck.trump!=null)
-        {
-            if(!deck.isClosed)
-            {
-                view.DeckVisible.set(true);
-                view.TrumpCardVisibility.set(true);
-                view.TrumpCardImage.setValue(cardsFaceMap.get(deck.trump));
-            }
-            else
-            {
-                view.TrumpDeckClosedVisibility.set(true);
-                view.TrumpCardVisibility.set(false);
-            }
-        }
-        else
-        {
-            view.DeckVisible.set(false);
-            view.TrumpCardVisibility.set(false);
-        }
     }
 
     private void StartDraws()
