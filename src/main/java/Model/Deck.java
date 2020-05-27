@@ -3,6 +3,7 @@ package Model;
 import java.util.HashSet;
 
 public class Deck implements IRandomSetElement {
+    Boolean isClosed;
     HashSet<Card> deck;
     Card trump;
 
@@ -10,6 +11,7 @@ public class Deck implements IRandomSetElement {
     {
         deck=new HashSet<>();
         trump=null;
+        isClosed=false;
     }
 
     public Card Draw()

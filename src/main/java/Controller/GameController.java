@@ -147,6 +147,7 @@ public class GameController {
 
         Bindings.bindBidirectional(this.trumpDeckClosed.visibleProperty(), viewProperty.TrumpDeckClosedVisibility);
         Bindings.bindBidirectional(this.trumpView.visibleProperty(), viewProperty.TrumpCardVisibility);
+        Bindings.bindBidirectional(this.trumpView.imageProperty(), viewProperty.TrumpCardImage);
         Bindings.bindBidirectional(this.PlayerActionBlockerPane1.visibleProperty(), viewProperty.PlayerCanAct);
         Bindings.bindBidirectional(this.PlayerActionBlockerPane2.visibleProperty(), viewProperty.PlayerCanAct);
         Bindings.bindBidirectional(this.PlayerActionBlockerPane3.visibleProperty(), viewProperty.PlayerCanAct);
@@ -185,43 +186,40 @@ public class GameController {
     }
 
     public void NewGame(ActionEvent actionEvent) {
-        viewProperty.NewGameButtonText.setValue("Surrender and New Game");
-        viewProperty.CanSave.set(true);
-        viewProperty.QuitButtonText.setValue("Surrender and Quit");
-        MenuModel.NewGame();
+        menuModel.NewGame();
     }
 
     public void SaveGame(ActionEvent actionEvent) {
-        MenuModel.SaveGame();
+        menuModel.SaveGame();
     }
 
     public void LoadGame(ActionEvent actionEvent) {
-        MenuModel.LoadGame();
+        menuModel.LoadGame();
     }
 
     public void SaveAndQuit(ActionEvent actionEvent) {
-        MenuModel.SaveGame();
+        menuModel.SaveGame();
         System.exit(0);
     }
 
     public void SurrenderAndQuit(ActionEvent actionEvent) {
-        MenuModel.Surrender();
+        menuModel.Surrender();
         System.exit(0);
     }
 
     public void deckClose(MouseEvent mouseEvent) {
-        GameModel.CloseDeck();
+        gameModel.CloseDeck();
     }
 
     public void trumpTake(MouseEvent mouseEvent) {
-        GameModel.TakeTrump();
+        gameModel.TakeTrump();
     }
 
     public void PlayerCallPair(ActionEvent actionEvent) {
-        GameModel.CallPair();
+        gameModel.CallPair();
     }
 
     public void Play20(MouseEvent mouseEvent) {
-        GameModel.PlayPair();
+        gameModel.PlayPair();
     }
 }

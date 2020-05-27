@@ -8,8 +8,8 @@ public class Player {
 
     public Player()
     {
-        Hand=null;
-        Scored=null;
+        Hand=new HashSet<Card>();
+        Scored=new HashSet<Card>();
     }
 
     public Card Play(Integer selected)
@@ -17,6 +17,11 @@ public class Player {
         Card ret=(Card)Hand.toArray()[selected];
         Hand.remove(ret);
         return ret;
+    }
+
+    Card cardInHand(Integer target)
+    {
+        return (Card)(Hand.toArray()[target-1]);
     }
 
     public HashSet<CardColour> HasPair()
@@ -30,8 +35,10 @@ public class Player {
         return ret;
     }
 
+    public void Draw(Card card){
+        Hand.add(card);
 
-
+    }
     public Integer Score()
     {
         Integer ret=0;

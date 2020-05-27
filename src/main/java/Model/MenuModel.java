@@ -15,8 +15,11 @@ public class MenuModel {
         xml=new XMLManager();
     }
 
-    public static void NewGame() {
-
+    public void NewGame() {
+        viewProperty.NewGameButtonText.setValue("Surrender and New Game");
+        viewProperty.CanSave.set(true);
+        viewProperty.QuitButtonText.setValue("Surrender and Quit");
+        gameModel.NewGame(xml.LoadFirstPlayer());
     }
 
     public static void SaveGame() {

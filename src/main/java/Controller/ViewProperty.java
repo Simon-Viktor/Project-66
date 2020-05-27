@@ -25,6 +25,7 @@ public class ViewProperty {
 
     public BooleanProperty TrumpCardVisibility;
     public BooleanProperty TrumpDeckClosedVisibility;
+    public ObjectProperty<Image> TrumpCardImage;
     public BooleanProperty PlayerCanAct;
 
     public BooleanProperty CanSave;
@@ -74,6 +75,7 @@ public class ViewProperty {
 
         TrumpCardVisibility=new SimpleBooleanProperty();
         TrumpDeckClosedVisibility=new SimpleBooleanProperty();
+        TrumpCardImage=new SimpleObjectProperty<Image>();
         PlayerCanAct=new SimpleBooleanProperty();
 
         CanSave=new SimpleBooleanProperty();
