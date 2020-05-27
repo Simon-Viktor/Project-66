@@ -134,6 +134,16 @@ public  class GameController {
     }
 
     public void NewGame(ActionEvent actionEvent) {
+        if(viewProperty.NewGameButtonText.get().contains("Surrender"))
+        {
+            menuModel.Surrender();
+        }
+        else
+        {
+            viewProperty.NewGameButtonText.setValue("Surrender and New Game");
+            viewProperty.CanSave.set(true);
+            viewProperty.QuitButtonText.setValue("Surrender and Quit");
+        }
         menuModel.NewGame();
         UpdateView();
     }
@@ -149,8 +159,6 @@ public  class GameController {
     public void SaveAndQuit(ActionEvent actionEvent) {
         //TODO - Currently testing method
 
-        gameModel.player.Scored.add(new Card(CardColour.Autumn, CardFace.King));
-        gameModel.CPU.Scored.add(new Card(CardColour.Autumn, CardFace.King));
 
         UpdateView();
         //menuModel.SaveGame();
@@ -168,6 +176,7 @@ public  class GameController {
 
     public void trumpTake(MouseEvent mouseEvent) {
         gameModel.TakeTrump();
+        UpdateView();
     }
 
     public void PlayerCallPair(ActionEvent actionEvent) {

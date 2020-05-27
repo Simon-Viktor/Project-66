@@ -44,9 +44,12 @@ public class GameModel {
     }
 
     public void TakeTrump() {
-        if(player.Hand.contains(new Card(deck.trumpColour.get(), CardFace.Underknave)))
+        Card temp=new Card(deck.trumpColour.get(), CardFace.Underknave);
+        if(player.Hand.contains(temp))
         {
-            //TODO - Replace the cards in question with each other.
+            player.Hand.remove(temp);
+            player.Hand.add(deck.trump);
+            deck.trump=temp;
         }
     }
 
