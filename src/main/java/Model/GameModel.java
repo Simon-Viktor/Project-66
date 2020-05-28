@@ -73,6 +73,7 @@ public class GameModel {
                         processVictory(result);
                         return;
                     }
+                    TrickOverDraw();
                 }
                 else
                 {
@@ -82,6 +83,7 @@ public class GameModel {
                         processVictory(result);
                         return;
                     }
+                    TrickOverDraw();
                 }
             }
             else
@@ -130,6 +132,7 @@ public class GameModel {
                     processVictory(result);
                     return;
                 }
+                TrickOverDraw();
             }
             else
             {
@@ -139,10 +142,27 @@ public class GameModel {
                     processVictory(result);
                     return;
                 }
+                TrickOverDraw();
             }
         }
         UpdateView();
 
+    }
+    private void TrickOverDraw()
+    {
+        if(!deck.isClosed)
+        {
+            if(firstPlayer== PlayerEnum.Player)
+            {
+                player.Draw(deck.Draw());
+                CPU.Draw(deck.Draw());
+            }
+            else
+            {
+                CPU.Draw(deck.Draw());
+                player.Draw(deck.Draw());
+            }
+        }
     }
     private void UpdateView()
     {
