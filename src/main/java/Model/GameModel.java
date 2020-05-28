@@ -24,6 +24,7 @@ public class GameModel {
     public Boolean isGoing;
     @Nullable
     public PlayerEnum winner;
+    public Boolean playerCalledPair;
 
     public GameModel(GameController controller)
     {
@@ -35,8 +36,10 @@ public class GameModel {
         canPlay=false;
         isGoing=false;
         winner=null;
+        playerCalledPair=false;
 
         generateFullDeck();
+        //TODO - Sometime, the colour of the trump card gets nulled. Fix that.
         Bindings.bindBidirectional(this.deck.trumpColour, this.playedCards.trumpColour);
         Bindings.bindBidirectional(this.deck.trumpColour, this.CPU.TrumpColour);
         Bindings.bindBidirectional(this.deck.trumpColour, this.player.TrumpColour);
@@ -50,7 +53,8 @@ public class GameModel {
     }
 
     public void CallPair() {
-        //TODO
+        playerCalledPair=!playerCalledPair;
+        //TODO - disable player's ability to do anything other than cancel or call
     }
 
     public void TakeTrump() {
@@ -64,8 +68,14 @@ public class GameModel {
         }
     }
 
-    public void PlayPair() {
-        //TODO
+    public void PlayPair(CardColour colour) {
+        //TODO - enable playing cards again.
+        playerCalledPair=false;
+        player.ColourRestriction=colour;
+        player.PairRestriction=true;
+        player.ExtraScore+=20;
+        if(colour.equals(deck.trumpColour)) player.ExtraScore+=20;
+        if(player.Score()>=66)processVictory(PlayerEnum.Player);
     }
 
     public void Play(int target) {
@@ -79,7 +89,7 @@ public class GameModel {
                 if(result.scorer==PlayerEnum.Player) {
                     firstPlayer=PlayerEnum.Player;
                     if (player.ScoreCards(result)) {
-                        processVictory(result);
+                        processVictory(result.scorer);
                         return;
                     }
                     TrickOverDraw();
@@ -89,7 +99,7 @@ public class GameModel {
                     firstPlayer=PlayerEnum.CPU;
                     if(CPU.ScoreCards(result))
                     {
-                        processVictory(result);
+                        processVictory(result.scorer);
                         return;
                     }
                     TrickOverDraw();
@@ -108,11 +118,13 @@ public class GameModel {
                 thread.start();
             }
         }
+        player.PairRestriction=false;
+        player.ColourRestriction=null;
     }
 
-    private void processVictory(TrickResult result) {
+    private void processVictory(PlayerEnum result) {
         System.out.println("TODO");
-        winner=result.scorer;
+        winner=result;
         isGoing=false;
         parent.gameUpdate();
         //TODO - calculate total game score here
@@ -159,7 +171,7 @@ public class GameModel {
             if(result.scorer==PlayerEnum.Player) {
                 firstPlayer=PlayerEnum.Player;
                 if (player.ScoreCards(result)) {
-                    processVictory(result);
+                    processVictory(result.scorer);
                     return;
                 }
                 TrickOverDraw();
@@ -169,7 +181,7 @@ public class GameModel {
                 firstPlayer=PlayerEnum.CPU;
                 if(CPU.ScoreCards(result))
                 {
-                    processVictory(result);
+                    processVictory(result.scorer);
                     return;
                 }
                 TrickOverDraw();

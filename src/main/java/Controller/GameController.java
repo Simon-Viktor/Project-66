@@ -176,8 +176,10 @@ public  class GameController {
     }
 
     public void deckClose(MouseEvent mouseEvent) {
-        gameModel.CloseDeck();
-        UpdateView();
+        if(gameModel.isGoing) {
+            gameModel.CloseDeck();
+            UpdateView();
+        }
     }
 
     public void trumpTake(MouseEvent mouseEvent) {
@@ -187,11 +189,18 @@ public  class GameController {
 
     public void PlayerCallPair(ActionEvent actionEvent) {
         gameModel.CallPair();
+        UpdateView();
     }
 
     public void Play20(MouseEvent mouseEvent) {
-        //TODO - get which button was pressed for playing 20.
-        gameModel.PlayPair();
+        String target= ((ImageView)mouseEvent.getTarget()).idProperty().get();
+        CardColour targetColour= CardColour.Spring;
+        for (CardColour c :
+                CardColour.values()) {
+            if (target.contains(c.fileSegment)) targetColour=c;
+        }
+        gameModel.PlayPair(targetColour);
+        UpdateView();
     }
 
 
@@ -312,28 +321,43 @@ public  class GameController {
 
     private void handlePlayerActionPossibilities() {
         //TODO - Everything here is what's left as TODOs from ViewProperty
-        if(gameModel.player.HasPair().size()>0)
+        if(gameModel.player.HasPair().size()>0)//&&gameModel.canPlay) <- for when canPlay is properly handled.
         {
             viewProperty.Call20Visible.set(true);
-            //if()
+            viewProperty.Spring20Visible.set(false);
+            viewProperty.Summer20Visible.set(false);
+            viewProperty.Autumn20Visible.set(false);
+            viewProperty.Winter20Visible.set(false);
+            if(gameModel.playerCalledPair)
+            {
+                for (CardColour colour:gameModel.player.HasPair()) {
+                    switch (colour)
+                    {
+                        case Spring:
+                            viewProperty.Spring20Visible.set(true);
+                            break;
+                        case Summer:
+                            viewProperty.Summer20Visible.set(true);
+                            break;
+                        case Autumn:
+                            viewProperty.Autumn20Visible.set(true);
+                            break;
+                        case Winter:
+                            viewProperty.Winter20Visible.set(true);
+                            break;
+                    }
+                }
+            }
             //TODO - this is for after the player calls a pair. Pressing the button again will cancel that.
-            //viewProperty.Spring20Visible.set(false);
-            //viewProperty.Summer20Visible.set(false);
-            //viewProperty.Autumn20Visible.set(false);
-            //viewProperty.Winter20Visible.set(false);
-            //for (CardColour colour:gameModel.player.HasPair()) {
-            //    switch (colour)
-            //    {
-            //        case Spring:
-            //            viewProperty.Spring20Visible.set(true);
-            //        case Summer:
-            //            viewProperty.Summer20Visible.set(true);
-            //        case Autumn:
-            //            viewProperty.Autumn20Visible.set(true);
-            //        case Winter:
-            //            viewProperty.Winter20Visible.set(true);
-            //    }
-            //}
+
+        }
+        else
+        {
+            viewProperty.Call20Visible.set(false);
+            viewProperty.Spring20Visible.set(false);
+            viewProperty.Summer20Visible.set(false);
+            viewProperty.Autumn20Visible.set(false);
+            viewProperty.Winter20Visible.set(false);
         }
     }
 

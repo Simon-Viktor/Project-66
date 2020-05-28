@@ -12,6 +12,7 @@ public class Player {
     public CardColour ColourRestriction;
     public Boolean PairRestriction;
     public ObjectProperty<CardColour> TrumpColour;
+    public Integer ExtraScore;
 
     public Player()
     {
@@ -20,6 +21,7 @@ public class Player {
         ColourRestriction=null;
         PairRestriction=false;
         TrumpColour=new SimpleObjectProperty<CardColour>();
+        ExtraScore=0;
     }
 
     public Card Play(Integer selected)
@@ -91,6 +93,7 @@ public class Player {
         for (Card card: Scored) {
             ret+=card.cardFace.value;
         }
+        ret+=ExtraScore;
         return ret;
     }
 }
