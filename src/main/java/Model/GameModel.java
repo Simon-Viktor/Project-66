@@ -39,7 +39,7 @@ public class GameModel {
         }
     }
 
-    public static void CallPair() {
+    public void CallPair() {
 
     }
 
@@ -53,7 +53,7 @@ public class GameModel {
         }
     }
 
-    public static void PlayPair() {
+    public void PlayPair() {
 
     }
 
@@ -83,6 +83,14 @@ public class GameModel {
         deck.Shuffle(cloneDeck());
         StartDraws();
     }
+    private HashSet<Card> cloneDeck()
+    {
+        HashSet<Card> ret=new HashSet<Card>();
+        for (Card card:(HashSet<Card>)(fullDeck.clone())) {
+            ret.add(card);
+        }
+        return ret;
+    }
 
     private void StartDraws()
     {
@@ -102,12 +110,12 @@ public class GameModel {
         }
         deck.HitTrump();
     }
-    private HashSet<Card> cloneDeck()
-    {
-        HashSet<Card> ret=new HashSet<Card>();
-        for (Card card:(HashSet<Card>)(fullDeck.clone())) {
-            ret.add(card);
-        }
-        return ret;
+
+    public void Surrender() {
+        //TODO - Calculate winning before these parts
+        player=new Player();
+        CPU=new CPUPlayer();
+        deck=new Deck();
+        playedCards=new PlayedCards();
     }
 }

@@ -28,7 +28,7 @@ public class MenuModel {
     }
 
     public void Surrender() {
-        //TODO
+        gameModel.Surrender();
     }
     public void SetScore()
     {

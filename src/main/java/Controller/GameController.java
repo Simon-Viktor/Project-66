@@ -172,6 +172,7 @@ public  class GameController {
 
     public void deckClose(MouseEvent mouseEvent) {
         gameModel.CloseDeck();
+        UpdateView();
     }
 
     public void trumpTake(MouseEvent mouseEvent) {
@@ -326,6 +327,7 @@ public  class GameController {
                 viewProperty.DeckVisible.set(true);
                 viewProperty.TrumpCardVisibility.set(true);
                 viewProperty.TrumpCardImage.setValue(gameModel.cardsFaceMap.get(gameModel.deck.trump));
+                viewProperty.TrumpDeckClosedVisibility.set(false);
             }
             else
             {

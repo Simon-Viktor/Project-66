@@ -12,7 +12,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>14</maven.compiler.source>
         <maven.compiler.target>14</maven.compiler.target>
-        <exec.mainClass>main.Main</exec.mainClass>
+        <exec.mainClass>Main.Main</exec.mainClass>
     </properties>
 
     <dependencies>
@@ -45,6 +45,15 @@
             <artifactId>xpp3</artifactId>
             <version>1.1.6</version>
         </dependency>
+        <!-- Required for proper randomization -->
+
+        <dependency>
+            <groupId>org.jeasy</groupId>
+            <artifactId>easy-random-randomizers</artifactId>
+            <version>4.2.0</version>
+        </dependency>
+
+
     </dependencies>
 
     <build>

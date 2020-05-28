@@ -1,13 +1,15 @@
 package Model;
 
+import com.github.javafaker.DateAndTime;
+
+import java.util.Date;
 import java.util.Iterator;
 import java.util.Random;
 import java.util.Set;
 
 public interface IRandomSetElement {
 
-    public static <E> E getRandomElement(Set<? extends E> set){
-
+    static <E> E getRandomElement(Set<? extends E> set){
         Random random = new Random();
         int randomNumber = random.nextInt(set.size());
         Iterator<? extends E> iterator = set.iterator();
