@@ -1,6 +1,7 @@
 package Controller;
 
 import Model.*;
+import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -11,6 +12,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.HashSet;
 
 public  class GameController {
@@ -97,12 +99,14 @@ public  class GameController {
         viewProperty=new ViewProperty();
         setupStaticViews();
         handleBindings();
-        gameModel=new GameModel(viewProperty);
-        menuModel=new MenuModel(gameModel, viewProperty);
+        gameModel=new GameModel(this);
+        menuModel=new MenuModel(gameModel);
         viewProperty.DeckVisible.setValue(true);
         viewProperty.NewGameButtonText.setValue("New Game");
         viewProperty.QuitButtonText.setValue("Quit");
-        menuModel.SetScore();
+        var score= menuModel.GetScore();
+        viewProperty.PlayerTotalScoreText.setValue(score.playerScore.toString());
+        viewProperty.CPUTotalScoreText.setValue(score.CPUScore.toString());
     }
 
     private void setupStaticViews()
@@ -185,6 +189,7 @@ public  class GameController {
     }
 
     public void Play20(MouseEvent mouseEvent) {
+        //TODO - get which button was pressed for playing 20.
         gameModel.PlayPair();
     }
 
@@ -244,13 +249,24 @@ public  class GameController {
     }
 
 
+    public void gameUpdate()
+    {
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                UpdateView();
+            }
+        });
+    }
+
     public void UpdateView() {
         handleHandsViews();
         handleDeckView();
         handlePlayedCards();
         if(gameModel.player.Score()==0) viewProperty.GameScoreVisible.set(false);
         else {
-            viewProperty.GameScore.set(gameModel.player.Score().toString());
+            String etc=gameModel.player.Score().toString();
+            viewProperty.GameScore.set(etc);
             viewProperty.GameScoreVisible.set(true);
         }
         handlePlayerActionPossibilities();

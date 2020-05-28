@@ -6,12 +6,10 @@ import XMLManagement.XMLManager;
 public class MenuModel {
     //TODO - Implement interactions with the menus here
     GameModel gameModel;
-    ViewProperty viewProperty;
     XMLManager xml;
-    public MenuModel(GameModel game, ViewProperty view)
+    public MenuModel(GameModel game)
     {
         gameModel=game;
-        viewProperty=view;
         xml=new XMLManager();
     }
 
@@ -30,10 +28,8 @@ public class MenuModel {
     public void Surrender() {
         gameModel.Surrender();
     }
-    public void SetScore()
+    public Score GetScore()
     {
-        Score score=xml.GetScore();
-        viewProperty.PlayerTotalScoreText.setValue(score.playerScore.toString());
-        viewProperty.CPUTotalScoreText.setValue(score.CPUScore.toString());
+        return xml.GetScore();
     }
 }

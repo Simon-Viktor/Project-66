@@ -4,6 +4,9 @@ public class CPUPlayer extends Player implements IRandomSetElement {
 
     public Card pickCard()
     {
-        return IRandomSetElement.getRandomElement(restrictedHand());
+        //TODO - potentially overhaul this to be smarter
+        Card ret= IRandomSetElement.getRandomElement(restrictedHand());
+        Hand.remove(ret);
+        return ret;
     }
 }

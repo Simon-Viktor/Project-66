@@ -49,6 +49,14 @@ public class Player {
         return ret;
     }
 
+    public Boolean ScoreCards(TrickResult result)
+    {
+        Scored.add(result.card1);
+        Scored.add(result.card2);
+        if(Score()>=66)return true;
+        return false;
+    }
+
     public void Draw(Card card){
         Hand.add(card);
 

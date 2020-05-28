@@ -3,7 +3,7 @@ package Model;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 
-import java.util.HashSet;
+import java.util.concurrent.TimeUnit;
 
 public class PlayedCards {
     public Card CPUPlayed;
@@ -17,19 +17,26 @@ public class PlayedCards {
         trumpColour=new SimpleObjectProperty<CardColour>();
     }
 
-    public TrickResult PlayCard(Card card, PlayerEnum target)
+    public void PlayCard(Card card, PlayerEnum target)
     {
         switch (target)
         {
             case Player:
                 playerPlayed=card;
-                //TODO - Implement the following bit, whatever it was going to be...
-                //if(CPUPlayed!=null)
                 break;
             case CPU:
                 CPUPlayed=card;
+                try {
+                    TimeUnit.MILLISECONDS.sleep(500);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
                 break;
         }
+    }
+
+    public TrickResult Resolve(PlayerEnum target)
+    {
         if(CPUPlayed!=null&&playerPlayed!=null)
         {
             switch (target)
@@ -42,7 +49,6 @@ public class PlayedCards {
         }
         return null;
     }
-
     private TrickResult ResolvePlayer() {
         PlayerEnum scorer=PlayerEnum.Player;
         if(playerPlayed.cardColour!=CPUPlayed.cardColour)

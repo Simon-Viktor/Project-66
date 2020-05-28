@@ -1,26 +1,28 @@
 package Model;
 
-import Controller.ViewProperty;
+import Controller.GameController;
 import javafx.beans.binding.Bindings;
+import javafx.concurrent.Task;
 import javafx.scene.image.Image;
 
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.concurrent.TimeUnit;
 
 public class GameModel {
     HashSet<Card> fullDeck;
     public HashMap<Card, Image> cardsFaceMap;
 
-    ViewProperty view;
+    GameController parent;
     public Deck deck;
     public Player player;
     public CPUPlayer CPU;
     public PlayedCards playedCards;
     public PlayerEnum firstPlayer;
 
-    public GameModel(ViewProperty view)
+    public GameModel(GameController controller)
     {
-        this.view=view;
+        parent=controller;
         deck=new Deck();
         player=new Player();
         CPU=new CPUPlayer();
@@ -62,7 +64,89 @@ public class GameModel {
         if(played!=null)
         {
             playedCards.PlayCard(played, PlayerEnum.Player);
+            var result=playedCards.Resolve(PlayerEnum.Player);
+            if(result!=null)
+            {
+                if(result.scorer==PlayerEnum.Player) {
+                    firstPlayer=PlayerEnum.Player;
+                    if (player.ScoreCards(result)) {
+                        processVictory(result);
+                        return;
+                    }
+                }
+                else
+                {
+                    firstPlayer=PlayerEnum.CPU;
+                    if(CPU.ScoreCards(result))
+                    {
+                        processVictory(result);
+                        return;
+                    }
+                }
+            }
+            else
+            {
+                Task t=new Task() {
+                    @Override
+                    protected Object call() throws Exception {
+                        CPUPlay();
+                        return null;
+                    }
+                }  ;
+                Thread thread=new Thread(t);
+                thread.start();
+            }
         }
+    }
+
+    private void processVictory(TrickResult result) {
+        //TODO - calculate total game score here
+        //TODO - write the new values of the game's results out
+        //TODO - reassign new first player and write it out
+    }
+
+    private void CPUPlay()
+    {
+        if(firstPlayer==PlayerEnum.Player) {
+            try {
+                TimeUnit.MILLISECONDS.sleep(500);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        playedCards.PlayCard(CPU.pickCard(), PlayerEnum.CPU);
+        UpdateView();
+        try {
+            TimeUnit.MILLISECONDS.sleep(500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        var result=playedCards.Resolve(PlayerEnum.CPU);
+        if(result!=null)
+        {
+            if(result.scorer==PlayerEnum.Player) {
+                firstPlayer=PlayerEnum.Player;
+                if (player.ScoreCards(result)) {
+                    processVictory(result);
+                    return;
+                }
+            }
+            else
+            {
+                firstPlayer=PlayerEnum.CPU;
+                if(CPU.ScoreCards(result))
+                {
+                    processVictory(result);
+                    return;
+                }
+            }
+        }
+        UpdateView();
+
+    }
+    private void UpdateView()
+    {
+        parent.gameUpdate();
     }
 
     private void generateFullDeck()
@@ -112,7 +196,7 @@ public class GameModel {
     }
 
     public void Surrender() {
-        //TODO - Calculate winning before these parts
+        //TODO - Calculate winning scores before these parts
         player=new Player();
         CPU=new CPUPlayer();
         deck=new Deck();
