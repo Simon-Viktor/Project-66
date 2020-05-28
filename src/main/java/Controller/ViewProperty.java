@@ -4,12 +4,12 @@ import javafx.beans.property.*;
 import javafx.scene.image.Image;
 
 public class ViewProperty {
-    public BooleanProperty Spring20Visible; //TODO
-    public BooleanProperty Summer20Visible; //TODO
-    public BooleanProperty Autumn20Visible; //TODO
-    public BooleanProperty Winter20Visible; //TODO
+    public BooleanProperty Spring20Visible;
+    public BooleanProperty Summer20Visible;
+    public BooleanProperty Autumn20Visible;
+    public BooleanProperty Winter20Visible;
 
-    public BooleanProperty Call20Visible; //TODO
+    public BooleanProperty Call20Visible;
     public BooleanProperty DeckVisible;
     public BooleanProperty GameScoreVisible;
     public StringProperty GameScore;

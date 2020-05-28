@@ -349,7 +349,6 @@ public  class GameController {
                 }
             }
             //TODO - this is for after the player calls a pair. Pressing the button again will cancel that.
-
         }
         else
         {
