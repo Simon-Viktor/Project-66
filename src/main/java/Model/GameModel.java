@@ -46,12 +46,13 @@ public class GameModel {
     }
 
     public void TakeTrump() {
-        Card temp=new Card(deck.trumpColour.get(), CardFace.Underknave);
-        if(player.Hand.contains(temp))
-        {
-            player.Hand.remove(temp);
-            player.Hand.add(deck.trump);
-            deck.trump=temp;
+        if (deck.deck.size() >= 3) {
+            Card temp = new Card(deck.trumpColour.get(), CardFace.Underknave);
+            if (player.Hand.contains(temp)) {
+                player.Hand.remove(temp);
+                player.Hand.add(deck.trump);
+                deck.trump = temp;
+            }
         }
     }
 
@@ -105,6 +106,23 @@ public class GameModel {
         //TODO - calculate total game score here
         //TODO - write the new values of the game's results out
         //TODO - reassign new first player and write it out
+    }
+    public Integer ProcessScoring(PlayerEnum winner)
+    {
+        Integer ret=0;
+        if(winner== PlayerEnum.Player)
+        {
+            ret+=1;
+            if(CPU.Score()<33) ret+=1;
+            if(CPU.Score()==0) ret+=1;
+        }
+        else
+        {
+            ret+=1;
+            if(player.Score()<33) ret+=1;
+            if(player.Score()==0) ret+=1;
+        }
+        return ret;
     }
 
     private void CPUPlay()

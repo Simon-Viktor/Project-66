@@ -32,11 +32,4 @@ public class Card {
     public int hashCode() {
         return cardColour.hashCode()+ cardFace.value;
     }
-
-    //TODO - this is tempporary
-
-    @Override
-    public String toString() {
-        return ""+cardColour.fileSegment.charAt(0)+cardColour.fileSegment.charAt(1)+"-"+cardFace.fileSegment.charAt(0)+cardFace.fileSegment.charAt(1);
-    }
 }

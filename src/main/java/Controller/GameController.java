@@ -104,6 +104,10 @@ public  class GameController {
         viewProperty.DeckVisible.setValue(true);
         viewProperty.NewGameButtonText.setValue("New Game");
         viewProperty.QuitButtonText.setValue("Quit");
+        handleScoreTotals();
+    }
+
+    private void handleScoreTotals() {
         var score= menuModel.GetScore();
         viewProperty.PlayerTotalScoreText.setValue(score.playerScore.toString());
         viewProperty.CPUTotalScoreText.setValue(score.CPUScore.toString());
@@ -269,6 +273,7 @@ public  class GameController {
             viewProperty.GameScore.set(etc);
             viewProperty.GameScoreVisible.set(true);
         }
+        handleScoreTotals();
         handlePlayerActionPossibilities();
     }
 

@@ -26,6 +26,10 @@ public class MenuModel {
     }
 
     public void Surrender() {
+        var score=gameModel.ProcessScoring(PlayerEnum.CPU);
+        var total=xml.GetScore();
+        total.CPUScore+=score;
+        xml.SetScore(total);
         gameModel.Surrender();
     }
     public Score GetScore()
