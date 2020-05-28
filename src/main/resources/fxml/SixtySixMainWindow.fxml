@@ -169,5 +169,15 @@
             <Pane fx:id="PlayerActionBlockerPane3" layoutX="387.0" prefHeight="200.0" prefWidth="827.0" />
          </children>
       </Pane>
+      <Label fx:id="CPUWinLogo" layoutX="474.0" layoutY="261.0" prefHeight="200.0" prefWidth="600.0" style="-fx-alignment: &quot;center&quot;;" text="CPU Wins!" textAlignment="CENTER" textFill="#bc5e5e">
+         <font>
+            <Font size="96.0" />
+         </font>
+      </Label>
+      <Label fx:id="PlayerWinLogo" layoutX="474.0" layoutY="261.0" prefHeight="200.0" prefWidth="600.0" style="-fx-alignment: &quot;center&quot;;" text="Player Wins!" textAlignment="CENTER" textFill="#bc5e5e">
+         <font>
+            <Font size="96.0" />
+         </font>
+      </Label>
    </children>
 </Pane>

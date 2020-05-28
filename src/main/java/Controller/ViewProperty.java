@@ -52,6 +52,9 @@ public class ViewProperty {
     public ObjectProperty<Image> PlayerPlayedImage;
     public ObjectProperty<Image> CPUPlayedImage;
 
+    public BooleanProperty PlayerWinVisible;
+    public BooleanProperty CPUWinVisible;
+
     public ViewProperty()
     {
         Spring20Visible=new SimpleBooleanProperty();
@@ -99,8 +102,9 @@ public class ViewProperty {
         PlayerHand4Visible=new SimpleBooleanProperty();
         PlayerHand5Visible=new SimpleBooleanProperty();
 
-
         PlayerPlayedImageVisible=new SimpleBooleanProperty();
         CPUPlayedImageVisible=new SimpleBooleanProperty();
+        CPUWinVisible= new SimpleBooleanProperty();
+        PlayerWinVisible= new SimpleBooleanProperty();
     }
 }

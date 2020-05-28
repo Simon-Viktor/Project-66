@@ -81,6 +81,11 @@ public  class GameController {
     @FXML
     private ImageView PlayerHand5;
 
+    @FXML
+    private Label CPUWinLogo;
+    @FXML
+    private Label PlayerWinLogo;
+
 
     ViewProperty viewProperty;
     GameModel gameModel;
@@ -101,10 +106,8 @@ public  class GameController {
         handleBindings();
         gameModel=new GameModel(this);
         menuModel=new MenuModel(gameModel);
+        UpdateView();
         viewProperty.DeckVisible.setValue(true);
-        viewProperty.NewGameButtonText.setValue("New Game");
-        viewProperty.QuitButtonText.setValue("Quit");
-        handleScoreTotals();
     }
 
     private void handleScoreTotals() {
@@ -145,12 +148,6 @@ public  class GameController {
         if(viewProperty.NewGameButtonText.get().contains("Surrender"))
         {
             menuModel.Surrender();
-        }
-        else
-        {
-            viewProperty.NewGameButtonText.setValue("Surrender and New Game");
-            viewProperty.CanSave.set(true);
-            viewProperty.QuitButtonText.setValue("Surrender and Quit");
         }
         menuModel.NewGame();
         UpdateView();
@@ -250,6 +247,9 @@ public  class GameController {
         Bindings.bindBidirectional(this.PlayerPlayedView.visibleProperty(), viewProperty.PlayerPlayedImageVisible);
         Bindings.bindBidirectional(this.CPUPlayedView.imageProperty(), viewProperty.CPUPlayedImage);
         Bindings.bindBidirectional(this.CPUPlayedView.visibleProperty(), viewProperty.CPUPlayedImageVisible);
+
+        Bindings.bindBidirectional(this.CPUWinLogo.visibleProperty(), viewProperty.CPUWinVisible);
+        Bindings.bindBidirectional(this.PlayerWinLogo.visibleProperty(), viewProperty.PlayerWinVisible);
     }
 
 
@@ -275,6 +275,39 @@ public  class GameController {
         }
         handleScoreTotals();
         handlePlayerActionPossibilities();
+        handleButtons();
+        handleWinners();
+    }
+    private void handleWinners() {
+        if (gameModel.winner != null)
+        {
+            if(gameModel.winner==PlayerEnum.Player)
+            {
+                viewProperty.PlayerWinVisible.set(true);
+            }
+            else
+            {
+                viewProperty.CPUWinVisible.set(true);
+            }
+        }
+        else
+        {
+            viewProperty.CPUWinVisible.set(false);
+            viewProperty.PlayerWinVisible.set(false);
+        }
+    }
+    private void handleButtons() {
+        if(gameModel.isGoing) {
+            viewProperty.NewGameButtonText.setValue("Surrender and New Game");
+            viewProperty.CanSave.set(true);
+            viewProperty.QuitButtonText.setValue("Surrender and Quit");
+        }
+        else
+        {
+            viewProperty.CanSave.set(false);
+            viewProperty.NewGameButtonText.setValue("New Game");
+            viewProperty.QuitButtonText.setValue("Quit");
+        }
     }
 
     private void handlePlayerActionPossibilities() {
@@ -282,7 +315,7 @@ public  class GameController {
         if(gameModel.player.HasPair().size()>0)
         {
             viewProperty.Call20Visible.set(true);
-
+            //if()
             //TODO - this is for after the player calls a pair. Pressing the button again will cancel that.
             //viewProperty.Spring20Visible.set(false);
             //viewProperty.Summer20Visible.set(false);

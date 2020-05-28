@@ -4,6 +4,7 @@ import Controller.GameController;
 import javafx.beans.binding.Bindings;
 import javafx.concurrent.Task;
 import javafx.scene.image.Image;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -19,6 +20,10 @@ public class GameModel {
     public CPUPlayer CPU;
     public PlayedCards playedCards;
     public PlayerEnum firstPlayer;
+    public Boolean canPlay;
+    public Boolean isGoing;
+    @Nullable
+    public PlayerEnum winner;
 
     public GameModel(GameController controller)
     {
@@ -27,6 +32,9 @@ public class GameModel {
         player=new Player();
         CPU=new CPUPlayer();
         playedCards=new PlayedCards();
+        canPlay=false;
+        isGoing=false;
+        winner=null;
 
         generateFullDeck();
         Bindings.bindBidirectional(this.deck.trumpColour, this.playedCards.trumpColour);
@@ -42,7 +50,7 @@ public class GameModel {
     }
 
     public void CallPair() {
-
+        //TODO
     }
 
     public void TakeTrump() {
@@ -57,7 +65,7 @@ public class GameModel {
     }
 
     public void PlayPair() {
-
+        //TODO
     }
 
     public void Play(int target) {
@@ -103,6 +111,10 @@ public class GameModel {
     }
 
     private void processVictory(TrickResult result) {
+        System.out.println("TODO");
+        winner=result.scorer;
+        isGoing=false;
+        parent.gameUpdate();
         //TODO - calculate total game score here
         //TODO - write the new values of the game's results out
         //TODO - reassign new first player and write it out
@@ -163,6 +175,10 @@ public class GameModel {
                 TrickOverDraw();
             }
         }
+        else
+        {
+            //TODO - Make CPU player start playing cards
+        }
         UpdateView();
 
     }
@@ -201,7 +217,13 @@ public class GameModel {
     }
 
     public void NewGame(PlayerEnum firstPlayer) {
+        winner=null;
+        isGoing=true;
         this.firstPlayer=firstPlayer;
+        player=new Player();
+        CPU=new CPUPlayer();
+        deck=new Deck();
+        playedCards=new PlayedCards();
         deck.Shuffle(cloneDeck());
         StartDraws();
     }
