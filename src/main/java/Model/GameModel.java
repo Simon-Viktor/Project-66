@@ -69,7 +69,6 @@ public class GameModel {
     }
 
     public void PlayPair(CardColour colour) {
-        //TODO - enable playing cards again.
         playerCalledPair=false;
         player.ColourRestriction=colour;
         player.PairRestriction=true;
@@ -268,7 +267,6 @@ public class GameModel {
     }
 
     public void Surrender() {
-        //TODO - Calculate winning scores before these parts
         player=new Player();
         CPU=new CPUPlayer();
         deck=new Deck();

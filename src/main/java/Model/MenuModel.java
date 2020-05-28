@@ -4,7 +4,6 @@ import Controller.ViewProperty;
 import XMLManagement.XMLManager;
 
 public class MenuModel {
-    //TODO - Implement interactions with the menus here
     GameModel gameModel;
     XMLManager xml;
     public MenuModel(GameModel game)
