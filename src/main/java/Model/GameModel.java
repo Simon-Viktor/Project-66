@@ -37,6 +37,7 @@ public class GameModel {
         isGoing=false;
         winner=null;
         playerCalledPair=false;
+        canPlay=true;
 
         generateFullDeck();
     }
@@ -50,6 +51,7 @@ public class GameModel {
 
     public void CallPair() {
         playerCalledPair=!playerCalledPair;
+        canPlay=!canPlay;
         //TODO - disable player's ability to do anything other than cancel or call
     }
 
@@ -71,9 +73,11 @@ public class GameModel {
         player.ExtraScore+=20;
         if(colour==deck.trumpColour.get()) player.ExtraScore+=20;
         if(player.Score()>=66)processVictory(PlayerEnum.Player);
+        canPlay=true;
     }
 
     public void Play(int target) {
+        canPlay=false;
         Card played=player.Play(target);
         if(played!=null)
         {
@@ -87,6 +91,7 @@ public class GameModel {
                         processVictory(result.scorer);
                         return;
                     }
+                    canPlay=true;
                     TrickOverDraw();
                 }
                 else
@@ -97,6 +102,7 @@ public class GameModel {
                         processVictory(result.scorer);
                         return;
                     }
+                    canPlay=true;
                     TrickOverDraw();
                 }
             }
@@ -169,6 +175,7 @@ public class GameModel {
                     processVictory(result.scorer);
                     return;
                 }
+                canPlay=true;
                 TrickOverDraw();
             }
             else
@@ -179,6 +186,7 @@ public class GameModel {
                     processVictory(result.scorer);
                     return;
                 }
+                canPlay=true;
                 TrickOverDraw();
             }
         }
@@ -233,6 +241,8 @@ public class GameModel {
         playedCards=new PlayedCards();
         deck.Shuffle(cloneDeck());
         StartDraws();
+        if(firstPlayer== PlayerEnum.Player) canPlay=true;
+        playerCalledPair=false;
 
         playedCards.trumpColour.unbind();
         CPU.TrumpColour.unbind();

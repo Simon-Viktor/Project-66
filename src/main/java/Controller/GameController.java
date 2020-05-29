@@ -190,6 +190,7 @@ public  class GameController {
     public void PlayerCallPair(ActionEvent actionEvent) {
         gameModel.CallPair();
         UpdateView();
+
     }
 
     public void Play20(MouseEvent mouseEvent) {
@@ -320,10 +321,16 @@ public  class GameController {
     }
 
     private void handlePlayerActionPossibilities() {
-        //TODO - Everything here is what's left as TODOs from ViewProperty
-        if(gameModel.player.HasPair().size()>0)//&&gameModel.canPlay) <- for when canPlay is properly handled.
+        if(gameModel.player.HasPair().size()>0) //<- for when canPlay is properly handled.
         {
-            viewProperty.Call20Visible.set(true);
+            if(!gameModel.player.PairRestriction)
+            {
+                viewProperty.Call20Visible.set(true);
+            }
+            else
+            {
+                viewProperty.Call20Visible.set(false);
+            }
             viewProperty.Spring20Visible.set(false);
             viewProperty.Summer20Visible.set(false);
             viewProperty.Autumn20Visible.set(false);
@@ -348,7 +355,6 @@ public  class GameController {
                     }
                 }
             }
-            //TODO - this is for after the player calls a pair. Pressing the button again will cancel that.
         }
         else
         {
@@ -357,6 +363,18 @@ public  class GameController {
             viewProperty.Summer20Visible.set(false);
             viewProperty.Autumn20Visible.set(false);
             viewProperty.Winter20Visible.set(false);
+        }
+        if(gameModel.canPlay)
+        {
+            viewProperty.CanSave.set(false);
+            viewProperty.PlayerCanAct.set(false);
+        }
+        else
+        {
+            if(gameModel.isGoing) {
+                viewProperty.CanSave.set(true);
+                viewProperty.PlayerCanAct.set(true);
+            }
         }
     }
 

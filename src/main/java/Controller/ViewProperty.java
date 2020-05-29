@@ -20,9 +20,9 @@ public class ViewProperty {
     public BooleanProperty TrumpCardVisibility;
     public BooleanProperty TrumpDeckClosedVisibility;
     public ObjectProperty<Image> TrumpCardImage;
-    public BooleanProperty PlayerCanAct; //TODO
+    public BooleanProperty PlayerCanAct;
 
-    public BooleanProperty CanSave; //TODO
+    public BooleanProperty CanSave;
     public StringProperty NewGameButtonText;
     public StringProperty QuitButtonText;
 
