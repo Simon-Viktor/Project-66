@@ -39,10 +39,6 @@ public class GameModel {
         playerCalledPair=false;
 
         generateFullDeck();
-        //TODO - Sometime, the colour of the trump card gets nulled. Fix that.
-        Bindings.bindBidirectional(this.deck.trumpColour, this.playedCards.trumpColour);
-        Bindings.bindBidirectional(this.deck.trumpColour, this.CPU.TrumpColour);
-        Bindings.bindBidirectional(this.deck.trumpColour, this.player.TrumpColour);
     }
 
     public void CloseDeck() {
@@ -237,6 +233,13 @@ public class GameModel {
         playedCards=new PlayedCards();
         deck.Shuffle(cloneDeck());
         StartDraws();
+
+        playedCards.trumpColour.unbind();
+        CPU.TrumpColour.unbind();
+        player.TrumpColour.unbind();
+        playedCards.trumpColour.bind(deck.trumpColour);
+        CPU.TrumpColour.bind(deck.trumpColour);
+        player.TrumpColour.bind(deck.trumpColour);
     }
     private HashSet<Card> cloneDeck()
     {
