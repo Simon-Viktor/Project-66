@@ -36,6 +36,7 @@ public class Deck implements IRandomSetElement {
         {
             ret=trump;
             trump=null;
+            isClosed=true;
         }
         return ret;
     }

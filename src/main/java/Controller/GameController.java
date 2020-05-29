@@ -321,7 +321,7 @@ public  class GameController {
     }
 
     private void handlePlayerActionPossibilities() {
-        if(gameModel.player.HasPair().size()>0) //<- for when canPlay is properly handled.
+        if(gameModel.player.HasPair().size()>0&&gameModel.CanCall()&&gameModel.winner==null)
         {
             if(!gameModel.player.PairRestriction)
             {

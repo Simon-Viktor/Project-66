@@ -45,14 +45,18 @@ public class GameModel {
     public void CloseDeck() {
         //TODO - fully implement deck closing
         if(deck.deck.size()>=3) {
-            deck.isClosed = true; //TODO - deck.isClosed is also true when endgame hits, but deck-size is 0. That way, win calculations won't award 3 for not winning.
+            deck.isClosed = true;
         }
     }
 
     public void CallPair() {
         playerCalledPair=!playerCalledPair;
         canPlay=!canPlay;
-        //TODO - disable player's ability to do anything other than cancel or call
+    }
+
+    public Boolean CanCall()
+    {
+        return playedCards.CPUPlayed==null&&playedCards.playerPlayed==null;
     }
 
     public void TakeTrump() {
@@ -78,6 +82,7 @@ public class GameModel {
 
     public void Play(int target) {
         canPlay=false;
+        if(deck.isClosed&&firstPlayer==PlayerEnum.CPU) player.ColourRestriction=playedCards.CPUPlayed.cardColour;
         Card played=player.Play(target);
         if(played!=null)
         {
@@ -102,8 +107,16 @@ public class GameModel {
                         processVictory(result.scorer);
                         return;
                     }
-                    canPlay=true;
                     TrickOverDraw();
+                    Task t=new Task() {
+                        @Override
+                        protected Object call() throws Exception {
+                            CPUPlay();
+                            return null;
+                        }
+                    };
+                    Thread thread=new Thread(t);
+                    thread.start();
                 }
             }
             else
@@ -131,6 +144,7 @@ public class GameModel {
         //TODO - calculate total game score here
         //TODO - write the new values of the game's results out
         //TODO - reassign new first player and write it out
+        //TODO - deck.isClosed is also true when endgame hits, but deck-size is 0. That way, win calculations won't award 3 for not winning.
     }
     public Integer ProcessScoring(PlayerEnum winner)
     {
@@ -159,6 +173,7 @@ public class GameModel {
                 e.printStackTrace();
             }
         }
+        if(deck.isClosed&&firstPlayer==PlayerEnum.Player) CPU.ColourRestriction=playedCards.playerPlayed.cardColour;
         playedCards.PlayCard(CPU.pickCard(), PlayerEnum.CPU);
         UpdateView();
         try {
@@ -175,8 +190,8 @@ public class GameModel {
                     processVictory(result.scorer);
                     return;
                 }
-                canPlay=true;
                 TrickOverDraw();
+                canPlay=true;
             }
             else
             {
@@ -186,13 +201,22 @@ public class GameModel {
                     processVictory(result.scorer);
                     return;
                 }
-                canPlay=true;
                 TrickOverDraw();
+                Task t=new Task() {
+                    @Override
+                    protected Object call() throws Exception {
+                        CPUPlay();
+                        return null;
+                    }
+                }  ;
+                Thread thread=new Thread(t);
+                thread.start();
             }
         }
         else
         {
-            //TODO - Make CPU player start playing cards
+            //TODO - bug - player can call 2 while it's not their turn
+            canPlay=true;
         }
         UpdateView();
 
