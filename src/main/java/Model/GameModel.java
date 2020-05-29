@@ -43,7 +43,6 @@ public class GameModel {
     }
 
     public void CloseDeck() {
-        //TODO - fully implement deck closing
         if(deck.deck.size()>=3) {
             deck.isClosed = true;
         }
@@ -145,6 +144,7 @@ public class GameModel {
         //TODO - write the new values of the game's results out
         //TODO - reassign new first player and write it out
         //TODO - deck.isClosed is also true when endgame hits, but deck-size is 0. That way, win calculations won't award 3 for not winning.
+        //TODO - remember that deck closing has special rules
     }
     public Integer ProcessScoring(PlayerEnum winner)
     {
@@ -215,7 +215,6 @@ public class GameModel {
         }
         else
         {
-            //TODO - bug - player can call 2 while it's not their turn
             canPlay=true;
         }
         UpdateView();
