@@ -110,9 +110,9 @@
       </Pane>
       <Pane layoutX="14.0" layoutY="335.0" prefHeight="200.0" prefWidth="200.0">
          <children>
-            <ImageView fx:id="trumpView" fitHeight="200.0" fitWidth="130.0" layoutX="35.0" layoutY="1.0" onMouseClicked="#trumpTake" pickOnBounds="true" preserveRatio="true" rotate="90.0" />
-            <ImageView fx:id="deckView" fitHeight="200.0" fitWidth="130.0" layoutX="5.0" layoutY="-1.0" onMouseClicked="#deckClose" pickOnBounds="true" preserveRatio="true" />
-            <ImageView fx:id="trumpDeckClosed" fitHeight="200.0" fitWidth="130.0" layoutX="35.0" layoutY="1.0" onMouseClicked="#trumpTake" pickOnBounds="true" preserveRatio="true" rotate="90.0" />
+            <ImageView fx:id="trumpView" fitHeight="200.0" fitWidth="130.0" layoutX="35.0" onMouseClicked="#trumpTake" pickOnBounds="true" preserveRatio="true" rotate="90.0" />
+            <ImageView fx:id="deckView" fitHeight="200.0" fitWidth="130.0" onMouseClicked="#deckClose" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="trumpDeckClosed" fitHeight="200.0" fitWidth="130.0" layoutX="35.0" onMouseClicked="#trumpTake" pickOnBounds="true" preserveRatio="true" rotate="90.0" />
             <Pane fx:id="PlayerActionBlockerPane2" prefHeight="200.0" prefWidth="200.0" />
          </children>
       </Pane>
