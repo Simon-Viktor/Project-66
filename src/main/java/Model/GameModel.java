@@ -69,7 +69,7 @@ public class GameModel {
         player.ColourRestriction=colour;
         player.PairRestriction=true;
         player.ExtraScore+=20;
-        if(colour.equals(deck.trumpColour)) player.ExtraScore+=20;
+        if(colour==deck.trumpColour.get()) player.ExtraScore+=20;
         if(player.Score()>=66)processVictory(PlayerEnum.Player);
     }
 
