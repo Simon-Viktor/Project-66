@@ -4,6 +4,23 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
+    <description>A small project implementing the simple game of 66 (A snapsen variant). Some Quallity of life elements such as saving the game are also implemented.</description>
+    <developers>
+        <developer>
+            <name>Simon Viktor</name>
+            <email>siviktrus@gmail.com</email>
+        </developer>
+    </developers>
+
+    <scm>
+        <!--//TODO-->
+    </scm>
+    <licenses>
+        <license>
+            <!--//TODO-->
+        </license>
+    </licenses>
+
     <groupId>hu.unideb.inf</groupId>
     <artifactId>Project66</artifactId>
     <version>1.0-SNAPSHOT</version>

@@ -169,6 +169,7 @@ public class GameModel {
             }
             endGameRestrictions();
         }
+        UpdateView();
     }
 
     private void processVictory(PlayerEnum result) {
@@ -185,6 +186,7 @@ public class GameModel {
         XMLManager.SetScore(totals);
         XMLManager.SetFirstPlayer(result);
         endGameRestrictions();
+        UpdateView();
     }
 
     private void endGameRestrictions()
@@ -341,6 +343,7 @@ public class GameModel {
             thread.start();
         }
     }
+
     private HashSet<Card> cloneDeck()
     {
         HashSet<Card> ret=new HashSet<Card>();
