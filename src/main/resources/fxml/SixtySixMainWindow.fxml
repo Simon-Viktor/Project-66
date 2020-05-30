@@ -49,7 +49,7 @@
                <children>
                   <Button fx:id="NewGameButton" mnemonicParsing="false" onAction="#NewGame" prefHeight="30.0" prefWidth="215.0" text="New Game" GridPane.columnIndex="1" GridPane.hgrow="NEVER" GridPane.rowIndex="1" />
                   <Button fx:id="SaveButton" mnemonicParsing="false" onAction="#SaveGame" prefHeight="30.0" prefWidth="215.0" text="Save" GridPane.columnIndex="3" GridPane.rowIndex="1" />
-                  <Button mnemonicParsing="false" onAction="#LoadGame" prefHeight="30.0" prefWidth="215.0" text="Load" GridPane.columnIndex="5" GridPane.rowIndex="1" />
+                  <Button fx:id="LoadButton" mnemonicParsing="false" onAction="#LoadGame" prefHeight="30.0" prefWidth="215.0" text="Load" GridPane.columnIndex="5" GridPane.rowIndex="1" />
                   <Button fx:id="SaveAndQuitButton" mnemonicParsing="false" onAction="#SaveAndQuit" prefHeight="30.0" prefWidth="215.0" text="Save and Quit" GridPane.columnIndex="7" GridPane.rowIndex="1" />
                   <Button fx:id="SurrenderAndQuitButton" mnemonicParsing="false" onAction="#SurrenderAndQuit" prefHeight="30.0" prefWidth="215.0" text="Surrender and Quit" GridPane.columnIndex="9" GridPane.rowIndex="1" />
                   <GridPane GridPane.columnIndex="13" GridPane.rowIndex="1">

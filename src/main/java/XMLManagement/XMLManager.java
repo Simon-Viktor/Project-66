@@ -1,5 +1,6 @@
 package XMLManagement;
 
+import Model.GameModel;
 import Model.PlayerEnum;
 import Model.Score;
 import com.thoughtworks.xstream.XStream;
@@ -31,7 +32,9 @@ public final class XMLManager {
         {
             new File(appPath).mkdirs();
         }
-        //xStream.omitField(PlayField.class, "menuCommandHandler"); <-Useful for later when omitting things becomes necessary
+        xStream.omitField(GameModel.class, "parent"); //<-Useful for later when omitting things becomes necessary
+        xStream.omitField(GameModel.class, "cardsFaceMap");
+        xStream.omitField(GameModel.class, "fullDeck");
         IsInitialized=true;
     }
 
@@ -59,30 +62,31 @@ public final class XMLManager {
             e.printStackTrace();
         }
     }
-
-    //TODO - Implement these once PlayField, or it's current equivalent is done.
-    /*
-    public void SaveGame(PlayField playField)
+    public static void SaveGame(GameModel gameModel)
     {
         FileWriter fileWriter= null;
         try {
             fileWriter = new FileWriter(savePath, false);
-            xStream.toXML(playField, fileWriter);
+            xStream.toXML(gameModel, fileWriter);
             fileWriter.close();
         }
         catch (IOException e) {
             e.printStackTrace();
         }
     }
-    @Nullable
-    public PlayField LoadGame()
+    public static GameModel LoadGame()
     {
-        if(!Exists(savePath)) return null;
-        PlayField ret=(PlayField)xStream.fromXML(getXMLString(savePath));
-        ret.LoadAdjustment();
+        GameModel ret=(GameModel)xStream.fromXML(getXMLString(savePath));
         return ret;
     }
-*/
+    public static Boolean CanLoad()
+    {
+        if(Exists(savePath))
+        {
+            return true;
+        }
+        return false;
+    }
     public static void SetFirstPlayer(PlayerEnum playerEnum)
     {
         FileWriter fileWriter= null;

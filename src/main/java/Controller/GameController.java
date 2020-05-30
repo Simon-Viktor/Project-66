@@ -1,6 +1,7 @@
 package Controller;
 
 import Model.*;
+import XMLManagement.XMLManager;
 import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.event.ActionEvent;
@@ -85,6 +86,8 @@ public  class GameController {
     private Label CPUWinLogo;
     @FXML
     private Label PlayerWinLogo;
+    @FXML
+    private Button LoadButton;
 
 
     ViewProperty viewProperty;
@@ -108,6 +111,7 @@ public  class GameController {
         menuModel=new MenuModel(gameModel);
         UpdateView();
         viewProperty.DeckVisible.setValue(true);
+        if(XMLManager.CanLoad()) viewProperty.CanLoad.setValue(true);
     }
 
     private void handleScoreTotals() {
@@ -155,19 +159,18 @@ public  class GameController {
 
     public void SaveGame(ActionEvent actionEvent) {
         menuModel.SaveGame();
+        UpdateView();
     }
 
     public void LoadGame(ActionEvent actionEvent) {
-        menuModel.LoadGame();
+        gameModel=menuModel.LoadGame();
+        gameModel.SetParent(this);
+        UpdateView();
     }
 
     public void SaveAndQuit(ActionEvent actionEvent) {
-        //TODO - Currently testing method
-
-
-        UpdateView();
-        //menuModel.SaveGame();
-        //System.exit(0);
+        menuModel.SaveGame();
+        System.exit(0);
     }
 
     public void SurrenderAndQuit(ActionEvent actionEvent) {
@@ -260,6 +263,7 @@ public  class GameController {
 
         Bindings.bindBidirectional(this.CPUWinLogo.visibleProperty(), viewProperty.CPUWinVisible);
         Bindings.bindBidirectional(this.PlayerWinLogo.visibleProperty(), viewProperty.PlayerWinVisible);
+        Bindings.bindBidirectional(this.LoadButton.visibleProperty(), viewProperty.CanLoad);
     }
 
 
@@ -283,6 +287,8 @@ public  class GameController {
             viewProperty.GameScore.set(etc);
             viewProperty.GameScoreVisible.set(true);
         }
+        if(XMLManager.CanLoad()) viewProperty.CanLoad.setValue(true);
+        else viewProperty.CanLoad.setValue(false);
         handleScoreTotals();
         handlePlayerActionPossibilities();
         handleButtons();
@@ -319,7 +325,6 @@ public  class GameController {
             viewProperty.QuitButtonText.setValue("Quit");
         }
     }
-
     private void handlePlayerActionPossibilities() {
         if(gameModel.player.HasPair().size()>0&&gameModel.CanCall()&&gameModel.winner==null)
         {
@@ -377,8 +382,6 @@ public  class GameController {
             }
         }
     }
-
-
     private void handleHandsViews()
     {
         viewProperty.CPUHand1Visible.set(gameModel.CPU.Hand.size()>0);

@@ -15,11 +15,13 @@ public class MenuModel {
     }
 
     public void SaveGame() {
-        //TODO
+        XMLManager.SaveGame(gameModel);
     }
 
-    public void LoadGame() {
-        //TODO
+    public GameModel LoadGame() {
+        gameModel=XMLManager.LoadGame();
+        gameModel.GameLoad();
+        return gameModel;
     }
 
     public void Surrender() {

@@ -54,6 +54,7 @@ public class ViewProperty {
 
     public BooleanProperty PlayerWinVisible;
     public BooleanProperty CPUWinVisible;
+    public BooleanProperty CanLoad;
 
     public ViewProperty()
     {
@@ -106,5 +107,6 @@ public class ViewProperty {
         CPUPlayedImageVisible=new SimpleBooleanProperty();
         CPUWinVisible= new SimpleBooleanProperty();
         PlayerWinVisible= new SimpleBooleanProperty();
+        CanLoad=new SimpleBooleanProperty();
     }
 }

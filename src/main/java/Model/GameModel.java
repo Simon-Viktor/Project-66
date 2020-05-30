@@ -309,6 +309,11 @@ public class GameModel {
         }
     }
 
+    public void GameLoad()
+    {
+        generateFullDeck();
+    }
+
     public void NewGame(PlayerEnum firstPlayer) {
         winner=null;
         isGoing=true;
@@ -377,5 +382,10 @@ public class GameModel {
         CPU=new CPUPlayer();
         deck=new Deck();
         playedCards=new PlayedCards();
+    }
+
+    public void SetParent(GameController parent)
+    {
+        this.parent=parent;
     }
 }
