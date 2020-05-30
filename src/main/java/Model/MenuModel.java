@@ -5,15 +5,13 @@ import XMLManagement.XMLManager;
 
 public class MenuModel {
     GameModel gameModel;
-    XMLManager xml;
     public MenuModel(GameModel game)
     {
         gameModel=game;
-        xml=new XMLManager();
     }
 
     public void NewGame() {
-        gameModel.NewGame(xml.LoadFirstPlayer());
+        gameModel.NewGame(XMLManager.LoadFirstPlayer());
     }
 
     public void SaveGame() {
@@ -26,13 +24,13 @@ public class MenuModel {
 
     public void Surrender() {
         var score=gameModel.ProcessScoring(PlayerEnum.CPU);
-        var total=xml.GetScore();
+        var total=XMLManager.GetScore();
         total.CPUScore+=score;
-        xml.SetScore(total);
+        XMLManager.SetScore(total);
         gameModel.Surrender();
     }
     public Score GetScore()
     {
-        return xml.GetScore();
+        return XMLManager.GetScore();
     }
 }

@@ -1,6 +1,7 @@
 package Model;
 
 import Controller.GameController;
+import XMLManagement.XMLManager;
 import javafx.beans.binding.Bindings;
 import javafx.concurrent.Task;
 import javafx.scene.image.Image;
@@ -24,6 +25,8 @@ public class GameModel {
     public Boolean isGoing;
     @Nullable
     public PlayerEnum winner;
+    @Nullable
+    public PlayerEnum closer;
     public Boolean playerCalledPair;
 
     public GameModel(GameController controller)
@@ -36,13 +39,15 @@ public class GameModel {
         canPlay=false;
         isGoing=false;
         winner=null;
+        closer=null;
         playerCalledPair=false;
         canPlay=true;
 
         generateFullDeck();
     }
 
-    public void CloseDeck() {
+    public void CloseDeck(PlayerEnum closer) {
+        this.closer=closer;
         if(deck.deck.size()>=3) {
             deck.isClosed = true;
         }
@@ -80,11 +85,11 @@ public class GameModel {
     }
 
     public void Play(int target) {
-        canPlay=false;
         if(deck.isClosed&&firstPlayer==PlayerEnum.CPU) player.ColourRestriction=playedCards.CPUPlayed.cardColour;
         Card played=player.Play(target);
         if(played!=null)
         {
+            canPlay=false;
             playedCards.PlayCard(played, PlayerEnum.Player);
             var result=playedCards.Resolve(PlayerEnum.Player);
             if(result!=null)
@@ -97,6 +102,9 @@ public class GameModel {
                     }
                     canPlay=true;
                     TrickOverDraw();
+                    if(player.Hand.isEmpty()){
+                        processOutOfCards(result.scorer);
+                    }
                 }
                 else
                 {
@@ -107,6 +115,9 @@ public class GameModel {
                         return;
                     }
                     TrickOverDraw();
+                    if(player.Hand.isEmpty()){
+                        processOutOfCards(result.scorer);
+                    }
                     Task t=new Task() {
                         @Override
                         protected Object call() throws Exception {
@@ -135,16 +146,52 @@ public class GameModel {
         player.ColourRestriction=null;
     }
 
+    private void processOutOfCards(PlayerEnum last) {
+        if(deck.deck.isEmpty())
+        {
+            processVictory(last);
+        }
+        else
+        {
+            if(closer==PlayerEnum.Player)
+            {
+                var score=XMLManager.GetScore();
+                score.CPUScore+=3;
+                XMLManager.SetScore(score);
+                XMLManager.SetFirstPlayer(PlayerEnum.CPU);
+            }
+            else
+            {
+                var score=XMLManager.GetScore();
+                score.playerScore+=3;
+                XMLManager.SetScore(score);
+                XMLManager.SetFirstPlayer(PlayerEnum.Player);
+            }
+            endGameRestrictions();
+        }
+    }
+
     private void processVictory(PlayerEnum result) {
-        System.out.println("TODO");
         winner=result;
+        int score=ProcessScoring(winner);
+        Score totals= XMLManager.GetScore();
+        if(result==PlayerEnum.Player)
+        {
+            totals.playerScore+=score;
+        }
+        else{
+            totals.CPUScore+=score;
+        }
+        XMLManager.SetScore(totals);
+        XMLManager.SetFirstPlayer(result);
+        endGameRestrictions();
+    }
+
+    private void endGameRestrictions()
+    {
         isGoing=false;
+        canPlay=false;
         parent.gameUpdate();
-        //TODO - calculate total game score here
-        //TODO - write the new values of the game's results out
-        //TODO - reassign new first player and write it out
-        //TODO - deck.isClosed is also true when endgame hits, but deck-size is 0. That way, win calculations won't award 3 for not winning.
-        //TODO - remember that deck closing has special rules
     }
     public Integer ProcessScoring(PlayerEnum winner)
     {
@@ -191,6 +238,9 @@ public class GameModel {
                     return;
                 }
                 TrickOverDraw();
+                if(player.Hand.isEmpty()){
+                    processOutOfCards(result.scorer);
+                }
                 canPlay=true;
             }
             else
@@ -202,6 +252,9 @@ public class GameModel {
                     return;
                 }
                 TrickOverDraw();
+                if(player.Hand.isEmpty()){
+                    processOutOfCards(result.scorer);
+                }
                 Task t=new Task() {
                     @Override
                     protected Object call() throws Exception {
@@ -266,6 +319,7 @@ public class GameModel {
         StartDraws();
         if(firstPlayer== PlayerEnum.Player) canPlay=true;
         playerCalledPair=false;
+        this.closer=null;
 
         playedCards.trumpColour.unbind();
         CPU.TrumpColour.unbind();
@@ -273,6 +327,19 @@ public class GameModel {
         playedCards.trumpColour.bind(deck.trumpColour);
         CPU.TrumpColour.bind(deck.trumpColour);
         player.TrumpColour.bind(deck.trumpColour);
+
+        if(firstPlayer==PlayerEnum.CPU)
+        {
+            Task t=new Task() {
+                @Override
+                protected Object call() throws Exception {
+                    CPUPlay();
+                    return null;
+                }
+            }  ;
+            Thread thread=new Thread(t);
+            thread.start();
+        }
     }
     private HashSet<Card> cloneDeck()
     {

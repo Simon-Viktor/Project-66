@@ -177,7 +177,7 @@ public  class GameController {
 
     public void deckClose(MouseEvent mouseEvent) {
         if(gameModel.isGoing) {
-            gameModel.CloseDeck();
+            gameModel.CloseDeck(PlayerEnum.Player);
             UpdateView();
         }
     }

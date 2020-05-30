@@ -10,15 +10,21 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
-public class XMLManager {
+public final class XMLManager {
     private static String appPath=System.getProperty("user.dir")+ File.separator+"GameData";
     private static String scorePath=appPath+File.separator+"Score.xml";
     private static String savePath=appPath+File.separator+"Save.xml";
     private static String firstPlayerPath=appPath+File.separator+"First.xml";
+    private static Boolean IsInitialized=false;
 
-    private XStream xStream;
 
-    public XMLManager()
+    private static XStream xStream;
+
+    private XMLManager()
+    {
+    }
+
+    private static void Initialize()
     {
         xStream=new XStream();
         if(!Exists(appPath))
@@ -26,18 +32,22 @@ public class XMLManager {
             new File(appPath).mkdirs();
         }
         //xStream.omitField(PlayField.class, "menuCommandHandler"); <-Useful for later when omitting things becomes necessary
+        IsInitialized=true;
     }
 
-
-    public Score GetScore()
+    public static Score GetScore()
     {
+        if(!IsInitialized)
+        {
+            Initialize();
+        }
         if(!Exists(scorePath))
         {
             SetScore(new Score(0, 0));
         }
         return (Score)xStream.fromXML(getXMLString(scorePath));
     }
-    public void SetScore(Score score)
+    public static void SetScore(Score score)
     {
         FileWriter fileWriter= null;
         try {
@@ -73,7 +83,7 @@ public class XMLManager {
         return ret;
     }
 */
-    public void SetFirstPlayer(PlayerEnum playerEnum)
+    public static void SetFirstPlayer(PlayerEnum playerEnum)
     {
         FileWriter fileWriter= null;
         try {
@@ -85,7 +95,7 @@ public class XMLManager {
             e.printStackTrace();
         }
     }
-    public PlayerEnum LoadFirstPlayer()
+    public static PlayerEnum LoadFirstPlayer()
     {
         if(!Exists(firstPlayerPath))
         {
@@ -103,7 +113,7 @@ public class XMLManager {
     }
 
 
-    private Boolean Exists(String path)
+    private static Boolean Exists(String path)
     {
         File f=new File(path);
         if(f.isFile())
@@ -112,7 +122,7 @@ public class XMLManager {
         }
         return false;
     }
-    private String getXMLString(String path)
+    private static String getXMLString(String path)
     {
         String xml="";
         try{
