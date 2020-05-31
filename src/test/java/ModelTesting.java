@@ -1,6 +1,6 @@
 import org.junit.Test;
 
-public class UnitTests {
+public class ModelTesting {
 
     @Test
     public void TestShuffling()

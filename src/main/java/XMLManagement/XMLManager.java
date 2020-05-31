@@ -32,7 +32,7 @@ public final class XMLManager {
         {
             new File(appPath).mkdirs();
         }
-        xStream.omitField(GameModel.class, "parent"); //<-Useful for later when omitting things becomes necessary
+        xStream.omitField(GameModel.class, "parent");
         xStream.omitField(GameModel.class, "cardsFaceMap");
         xStream.omitField(GameModel.class, "fullDeck");
         IsInitialized=true;
@@ -52,6 +52,10 @@ public final class XMLManager {
     }
     public static void SetScore(Score score)
     {
+        if(!IsInitialized)
+        {
+            Initialize();
+        }
         FileWriter fileWriter= null;
         try {
             fileWriter = new FileWriter(scorePath, false);
@@ -64,6 +68,10 @@ public final class XMLManager {
     }
     public static void SaveGame(GameModel gameModel)
     {
+        if(!IsInitialized)
+        {
+            Initialize();
+        }
         FileWriter fileWriter= null;
         try {
             fileWriter = new FileWriter(savePath, false);
@@ -76,6 +84,10 @@ public final class XMLManager {
     }
     public static GameModel LoadGame()
     {
+        if(!IsInitialized)
+        {
+            Initialize();
+        }
         GameModel ret=(GameModel)xStream.fromXML(getXMLString(savePath));
         return ret;
     }
@@ -89,6 +101,10 @@ public final class XMLManager {
     }
     public static void SetFirstPlayer(PlayerEnum playerEnum)
     {
+        if(!IsInitialized)
+        {
+            Initialize();
+        }
         FileWriter fileWriter= null;
         try {
             fileWriter = new FileWriter(firstPlayerPath, false);
@@ -101,6 +117,10 @@ public final class XMLManager {
     }
     public static PlayerEnum LoadFirstPlayer()
     {
+        if(!IsInitialized)
+        {
+            Initialize();
+        }
         if(!Exists(firstPlayerPath))
         {
             FileWriter fileWriter= null;
