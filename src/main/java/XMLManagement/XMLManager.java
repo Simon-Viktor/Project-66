@@ -12,6 +12,10 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.logging.*;
 
+
+/**
+ * Wrapper class for handling XML storage of information relevant to the game.
+ */
 public final class XMLManager {
     private static final Logger LOGGER = Logger.getLogger( XMLManager.class.getName() );
     private static String appPath=System.getProperty("user.dir")+ File.separator+"GameData";
@@ -41,6 +45,10 @@ public final class XMLManager {
         IsInitialized=true;
     }
 
+    /**
+     * Returns the currently saved score
+     * @return An object containing the currently saved game score
+     */
     public static Score GetScore()
     {
         if(!IsInitialized)
@@ -54,6 +62,11 @@ public final class XMLManager {
         }
         return (Score)xStream.fromXML(getXMLString(scorePath));
     }
+
+    /**
+     * Saves the given score.
+     * @param score The new current score to save.
+     */
     public static void SetScore(Score score)
     {
         if(!IsInitialized)
@@ -71,6 +84,11 @@ public final class XMLManager {
             LOGGER.log(Level.SEVERE, e.toString());
         }
     }
+
+    /**
+     * Saves the given game.
+     * @param gameModel The current GameModel object representing the state of the game.
+     */
     public static void SaveGame(GameModel gameModel)
     {
         if(!IsInitialized)
@@ -88,6 +106,11 @@ public final class XMLManager {
             LOGGER.log(Level.SEVERE, e.toString());
         }
     }
+
+    /**
+     * Loads in and returns the currently saved game. Use {@code GameModel.GameLoad()} and {@code GameModel.SetParent()} to fix certain binding errors.
+     * @return the loaded game.
+     */
     public static GameModel LoadGame()
     {
         if(!IsInitialized)
@@ -98,6 +121,11 @@ public final class XMLManager {
         GameModel ret=(GameModel)xStream.fromXML(getXMLString(savePath));
         return ret;
     }
+
+    /**
+     * Returns whether a saved file exists or not.
+     * @return true if loading is possible
+     */
     public static Boolean CanLoad()
     {
         if(Exists(savePath))
@@ -106,6 +134,11 @@ public final class XMLManager {
         }
         return false;
     }
+
+    /**
+     * Saves the current First Player.
+     * @param playerEnum The Player enum representing First Player that will be saved.
+     */
     public static void SetFirstPlayer(PlayerEnum playerEnum)
     {
         if(!IsInitialized)
@@ -124,6 +157,11 @@ public final class XMLManager {
             LOGGER.log(Level.SEVERE, e.toString());
         }
     }
+
+    /**
+     * Returns the saved First Player.
+     * @return The first player saved.
+     */
     public static PlayerEnum LoadFirstPlayer()
     {
         if(!IsInitialized)
