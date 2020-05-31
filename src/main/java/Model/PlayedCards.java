@@ -8,7 +8,7 @@ import java.util.concurrent.TimeUnit;
 public class PlayedCards {
     public Card CPUPlayed;
     public Card playerPlayed;
-    ObjectProperty<CardColour> trumpColour;
+    public ObjectProperty<CardColour> trumpColour;
 
     public PlayedCards()
     {

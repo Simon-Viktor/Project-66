@@ -349,7 +349,7 @@ public class GameModel {
         }
     }
 
-    private HashSet<Card> cloneDeck()
+    public HashSet<Card> cloneDeck()
     {
         HashSet<Card> ret=new HashSet<Card>();
         for (Card card:(HashSet<Card>)(fullDeck.clone())) {
