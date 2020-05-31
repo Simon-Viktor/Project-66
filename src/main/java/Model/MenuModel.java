@@ -1,8 +1,10 @@
 package Model;
 
-import Controller.ViewProperty;
 import XMLManagement.XMLManager;
 
+/**
+ * Class focused on handling interactions with the menu bar.
+ */
 public class MenuModel {
     GameModel gameModel;
     public MenuModel(GameModel game)
@@ -25,11 +27,10 @@ public class MenuModel {
     }
 
     public void Surrender() {
-        var score=gameModel.ProcessScoring(PlayerEnum.CPU);
+        var score=gameModel.Surrender();
         var total=XMLManager.GetScore();
         total.CPUScore+=score;
         XMLManager.SetScore(total);
-        gameModel.Surrender();
     }
     public Score GetScore()
     {

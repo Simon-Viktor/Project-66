@@ -1,5 +1,8 @@
 package Model;
 
+/**
+ * Class for describing a Card in the game.
+ */
 public class Card {
     public CardColour cardColour;
     public CardFace cardFace;
@@ -8,6 +11,11 @@ public class Card {
         cardColour=cC;
         cardFace =cN;
     }
+
+    /**
+     * Returns the value of the given card.
+     * @return the value of the card.
+     */
     public Integer Value()
     {
         return this.cardFace.value;

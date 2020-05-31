@@ -1,13 +1,14 @@
 package Model;
 
-import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleObjectProperty;
 
 import java.util.HashSet;
 import java.util.Stack;
 
+/**
+ * Class for managing the functions of the deck
+ */
 public class Deck implements IRandomSetElement {
     public Boolean isClosed;
     public Stack<Card> deck;
@@ -22,6 +23,10 @@ public class Deck implements IRandomSetElement {
         trumpColour=new SimpleObjectProperty<CardColour>();
     }
 
+    /**
+     * Returns the top card of the deck.
+     * @return a {@code Card}.
+     */
     public Card Draw()
     {
         Card ret=null;
@@ -40,6 +45,11 @@ public class Deck implements IRandomSetElement {
         }
         return ret;
     }
+
+    /**
+     * Using the provided cards, shuffles the deck into a randomized order.
+     * @param unshuffledDeck the hashset of all cards in teh game.
+     */
     public void Shuffle(HashSet<Card> unshuffledDeck)
     {
         deck=new Stack<Card>();
@@ -52,6 +62,9 @@ public class Deck implements IRandomSetElement {
         }
     }
 
+    /**
+     * Reveals the trump card, determining it's colour for the rest of the game.
+     */
     public void HitTrump() {
         trump=Draw();
         trumpColour.set(trump.cardColour);

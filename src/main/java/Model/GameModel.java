@@ -13,6 +13,9 @@ import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * The main class of the game, handling every element of it.
+ */
 public class GameModel {
     private static final Logger LOGGER = Logger.getLogger( XMLManager.class.getName() );
     HashSet<Card> fullDeck;
@@ -32,6 +35,10 @@ public class GameModel {
     public PlayerEnum closer;
     public Boolean playerCalledPair;
 
+    /**
+     * Constructor, tying in the UI controller.
+     * @param controller The current UI controller instance.
+     */
     public GameModel(GameController controller)
     {
         parent=controller;
@@ -49,6 +56,10 @@ public class GameModel {
         generateFullDeck();
     }
 
+    /**
+     * Closes the deck object, forcing colour matching and restricting draws.
+     * @param closer Entity that closed the deck
+     */
     public void CloseDeck(PlayerEnum closer) {
         this.closer=closer;
         if(deck.deck.size()>=3) {
@@ -56,16 +67,26 @@ public class GameModel {
         }
     }
 
+    /**
+     * Calls a pair, allowing the player to choose which pair to play, if they have multiple.
+     */
     public void CallPair() {
         playerCalledPair=!playerCalledPair;
         canPlay=!canPlay;
     }
 
+    /**
+     * Returns whether a player is allowed to call a pair or not.
+     * @return
+     */
     public Boolean CanCall()
     {
         return playedCards.CPUPlayed==null&&playedCards.playerPlayed==null;
     }
 
+    /**
+     * Replaces the Trump Underknave with whatever trump card there is.
+     */
     public void TakeTrump() {
         if (deck.deck.size() >= 3) {
             Card temp = new Card(deck.trumpColour.get(), CardFace.Underknave);
@@ -77,6 +98,10 @@ public class GameModel {
         }
     }
 
+    /**
+     * Forces the player to play the elements of a pair while scoring their points.
+     * @param colour The colour of the pair called by the player
+     */
     public void PlayPair(CardColour colour) {
         playerCalledPair=false;
         player.ColourRestriction=colour;
@@ -198,7 +223,9 @@ public class GameModel {
         canPlay=false;
         parent.gameUpdate();
     }
-    public Integer ProcessScoring(PlayerEnum winner)
+
+
+    private Integer ProcessScoring(PlayerEnum winner)
     {
         Integer ret=0;
         if(winner== PlayerEnum.Player)
@@ -312,11 +339,18 @@ public class GameModel {
         }
     }
 
+    /**
+     * Method to be used after Loading the game to generate assets necessary for full functionality.
+     */
     public void GameLoad()
     {
         generateFullDeck();
     }
 
+    /**
+     * Sets up a new game.
+     * @param firstPlayer The player that should start the game.
+     */
     public void NewGame(PlayerEnum firstPlayer) {
         winner=null;
         isGoing=true;
@@ -352,7 +386,8 @@ public class GameModel {
         }
     }
 
-    public HashSet<Card> cloneDeck()
+
+    private HashSet<Card> cloneDeck()
     {
         HashSet<Card> ret=new HashSet<Card>();
         for (Card card:(HashSet<Card>)(fullDeck.clone())) {
@@ -380,13 +415,23 @@ public class GameModel {
         deck.HitTrump();
     }
 
-    public void Surrender() {
+    /**
+     * Surrenders to the CPU, doing standard scoring to determine points
+     * @return The total score the CPU wins based on the game's current state.
+     */
+    public Integer Surrender() {
+        Integer ret=ProcessScoring(PlayerEnum.CPU);
         player=new Player();
         CPU=new CPUPlayer();
         deck=new Deck();
         playedCards=new PlayedCards();
+        return ret;
     }
 
+    /**
+     * Changes the UI controller to the given one. Useful only after loading the game.
+     * @param parent the UI controller
+     */
     public void SetParent(GameController parent)
     {
         this.parent=parent;

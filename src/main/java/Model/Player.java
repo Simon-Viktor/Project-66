@@ -5,6 +5,10 @@ import javafx.beans.property.SimpleObjectProperty;
 
 import java.util.HashSet;
 
+
+/**
+ * Class describing a human player of the game.
+ */
 public class Player {
     public HashSet<Card> Hand;
     public HashSet<Card> Scored;
@@ -24,6 +28,11 @@ public class Player {
         ExtraScore=0;
     }
 
+    /**
+     * returns a card in a given position and removes it from the hand, if the player can play it.
+     * @param selected
+     * @return
+     */
     public Card Play(Integer selected)
     {
         Card ret=(Card)Hand.toArray()[selected];
@@ -35,11 +44,20 @@ public class Player {
         return null;
     }
 
+    /**
+     * Returns the card in a particular position of the player's hand.
+     * @param target The position of the needed card
+     * @return
+     */
     public Card cardInHand(Integer target)
     {
         return (Card)(Hand.toArray()[target-1]);
     }
 
+    /**
+     * Returns the set of colours that the player has a pair of.
+     * @return
+     */
     public HashSet<CardColour> HasPair()
     {
         HashSet<CardColour> ret=new HashSet<CardColour>();
@@ -51,6 +69,11 @@ public class Player {
         return ret;
     }
 
+    /**
+     * Scores the cards contained in the {@code TrickResult}
+     * @param result
+     * @return returns true if the player has won the game as a result of scoring the cards.
+     */
     public Boolean ScoreCards(TrickResult result)
     {
         Scored.add(result.card1);
@@ -59,11 +82,18 @@ public class Player {
         return false;
     }
 
+    /**
+     * Adds a drawn card to the player's hand
+     * @param card
+     */
     public void Draw(Card card){
         Hand.add(card);
-
     }
 
+    /**
+     * Returns which cards in a player's hand can be played.
+     * @return
+     */
     protected HashSet<Card> restrictedHand()
     {
         HashSet<Card> ret=new HashSet<Card>();
@@ -87,6 +117,10 @@ public class Player {
         return ret;
     }
 
+    /**
+     * Returns the score of the player
+     * @return
+     */
     public Integer Score()
     {
         Integer ret=0;

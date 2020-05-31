@@ -1,5 +1,8 @@
 package Model;
 
+/**
+ * Wrapper class for trick results.
+ */
 public class TrickResult {
     public Card card1;
     public Card card2;

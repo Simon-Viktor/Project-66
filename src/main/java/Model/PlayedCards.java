@@ -8,6 +8,9 @@ import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * Class for resolving tricks and playing cards in a trick.
+ */
 public class PlayedCards {
     private static final Logger LOGGER = Logger.getLogger( XMLManager.class.getName() );
     public Card CPUPlayed;
@@ -21,6 +24,11 @@ public class PlayedCards {
         trumpColour=new SimpleObjectProperty<CardColour>();
     }
 
+    /**
+     * Plays a given card onto the play field.
+     * @param card The Card played.
+     * @param target The player playing the card.
+     */
     public void PlayCard(Card card, PlayerEnum target)
     {
         switch (target)
@@ -39,6 +47,11 @@ public class PlayedCards {
         }
     }
 
+    /**
+     * Resolves the current trick.
+     * @param target The player who played the last card given the trick.
+     * @return the result of the played cards. can be {@code null}.
+     */
     public TrickResult Resolve(PlayerEnum target)
     {
         if(CPUPlayed!=null&&playerPlayed!=null)
