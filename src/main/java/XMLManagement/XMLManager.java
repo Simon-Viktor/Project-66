@@ -10,8 +10,10 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.logging.*;
 
 public final class XMLManager {
+    private static final Logger LOGGER = Logger.getLogger( XMLManager.class.getName() );
     private static String appPath=System.getProperty("user.dir")+ File.separator+"GameData";
     private static String scorePath=appPath+File.separator+"Score.xml";
     private static String savePath=appPath+File.separator+"Save.xml";
@@ -27,6 +29,7 @@ public final class XMLManager {
 
     private static void Initialize()
     {
+        LOGGER.log(Level.INFO, "Initializing Manager");
         xStream=new XStream();
         if(!Exists(appPath))
         {
@@ -44,6 +47,7 @@ public final class XMLManager {
         {
             Initialize();
         }
+        LOGGER.log(Level.INFO, "Loading Score");
         if(!Exists(scorePath))
         {
             SetScore(new Score(0, 0));
@@ -56,6 +60,7 @@ public final class XMLManager {
         {
             Initialize();
         }
+        LOGGER.log(Level.INFO, "Saving Score");
         FileWriter fileWriter= null;
         try {
             fileWriter = new FileWriter(scorePath, false);
@@ -63,7 +68,7 @@ public final class XMLManager {
             fileWriter.close();
         }
         catch (IOException e) {
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, e.toString());
         }
     }
     public static void SaveGame(GameModel gameModel)
@@ -72,6 +77,7 @@ public final class XMLManager {
         {
             Initialize();
         }
+        LOGGER.log(Level.INFO, "Saving Game");
         FileWriter fileWriter= null;
         try {
             fileWriter = new FileWriter(savePath, false);
@@ -79,7 +85,7 @@ public final class XMLManager {
             fileWriter.close();
         }
         catch (IOException e) {
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, e.toString());
         }
     }
     public static GameModel LoadGame()
@@ -88,6 +94,7 @@ public final class XMLManager {
         {
             Initialize();
         }
+        LOGGER.log(Level.INFO, "Loading Game");
         GameModel ret=(GameModel)xStream.fromXML(getXMLString(savePath));
         return ret;
     }
@@ -105,6 +112,8 @@ public final class XMLManager {
         {
             Initialize();
         }
+
+        LOGGER.log(Level.INFO, "Saving First Player");
         FileWriter fileWriter= null;
         try {
             fileWriter = new FileWriter(firstPlayerPath, false);
@@ -112,7 +121,7 @@ public final class XMLManager {
             fileWriter.close();
         }
         catch (IOException e) {
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, e.toString());
         }
     }
     public static PlayerEnum LoadFirstPlayer()
@@ -121,6 +130,7 @@ public final class XMLManager {
         {
             Initialize();
         }
+        LOGGER.log(Level.INFO, "Loading First Player");
         if(!Exists(firstPlayerPath))
         {
             FileWriter fileWriter= null;
@@ -130,7 +140,7 @@ public final class XMLManager {
                 fileWriter.close();
             }
             catch (IOException e) {
-                e.printStackTrace();
+                LOGGER.log(Level.SEVERE, e.toString());
             }
         }
         return (PlayerEnum)xStream.fromXML(getXMLString(firstPlayerPath));
@@ -152,7 +162,7 @@ public final class XMLManager {
         try{
             xml= Files.readString(Path.of(path));
         } catch (IOException e) {
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, e.toString());
         }
         return xml;
     }
