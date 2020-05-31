@@ -1,11 +1,15 @@
 package Model;
 
+import XMLManagement.XMLManager;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 
 import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class PlayedCards {
+    private static final Logger LOGGER = Logger.getLogger( XMLManager.class.getName() );
     public Card CPUPlayed;
     public Card playerPlayed;
     public ObjectProperty<CardColour> trumpColour;
@@ -29,7 +33,7 @@ public class PlayedCards {
                 try {
                     TimeUnit.MILLISECONDS.sleep(500);
                 } catch (InterruptedException e) {
-                    e.printStackTrace();
+                    LOGGER.log(Level.SEVERE, e.toString());
                 }
                 break;
         }

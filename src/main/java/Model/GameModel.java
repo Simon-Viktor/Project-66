@@ -10,8 +10,11 @@ import org.jetbrains.annotations.Nullable;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class GameModel {
+    private static final Logger LOGGER = Logger.getLogger( XMLManager.class.getName() );
     HashSet<Card> fullDeck;
     public HashMap<Card, Image> cardsFaceMap;
 
@@ -219,7 +222,7 @@ public class GameModel {
             try {
                 TimeUnit.MILLISECONDS.sleep(500);
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                LOGGER.log(Level.SEVERE, e.toString());
             }
         }
         if(deck.isClosed&&firstPlayer==PlayerEnum.Player) CPU.ColourRestriction=playedCards.playerPlayed.cardColour;
@@ -228,7 +231,7 @@ public class GameModel {
         try {
             TimeUnit.MILLISECONDS.sleep(500);
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, e.toString());
         }
         var result=playedCards.Resolve(PlayerEnum.CPU);
         if(result!=null)
