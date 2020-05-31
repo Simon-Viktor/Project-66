@@ -1,0 +1,4 @@
+/**
+ * View controller.
+ */
+package Controller;
