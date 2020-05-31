@@ -7,7 +7,7 @@ import java.util.HashSet;
 import java.util.Stack;
 
 /**
- * Class for managing the functions of the deck
+ * Class for managing the functions of the deck.
  */
 public class Deck implements IRandomSetElement {
     public Boolean isClosed;

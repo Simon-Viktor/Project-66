@@ -1,7 +1,7 @@
 package Model;
 
 /**
- * Extension of a player to allow for automated behaviour
+ * Extension of a player to allow for automated behaviour.
  */
 public class CPUPlayer extends Player implements IRandomSetElement {
 
